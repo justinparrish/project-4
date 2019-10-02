@@ -36,6 +36,7 @@ class ServiceHistory(models.Model):
     price = models.FloatField()
     date = models.DateField()
     note = models.CharField(max_length=300)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='cars')
     
     
 
