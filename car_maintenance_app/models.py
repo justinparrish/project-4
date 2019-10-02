@@ -3,9 +3,9 @@ from django.db import models
 year_choice = [(x,x) for x in range(1960,2019)]
 
 services = [
-    ('brakes'),
-    ('rotors'),
-    ('oil change')
+    ('brakes','brakes'),
+    ('rotors','rotors'),
+    ('oil changes','oil change')
 ]
 
 class Owner(models.Model):
@@ -21,8 +21,8 @@ class Car(models.Model):
     
 class ServiceHistory(models.Model):
     dealership = models.CharField(max_length=60)
-    location = models.CharField(max_length=50)
-    service = models.ChoiceField(choices=services)
+    location = models.CharField(max_length=60)
+    service = models.CharField(choices=services, max_length=20)
     
 
     
