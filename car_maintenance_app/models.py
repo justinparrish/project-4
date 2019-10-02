@@ -6,14 +6,14 @@ year_choice = [(x,x) for x in range(1960,2019)]
 services = [
     ('Brake Pads','brakes'),
     ('Brake Rotors','rotors'),
-    ('Oil','oil change')
-    ('Air Filter','air filter')
-    ('Fuel Filter','fuel filter')
-    ('Spark Plug','spark plugs')
-    ('Tire Rotation','tire rotation')
-    ('Tire Balancing','tire balancing')
-    ('Transmission Flush','transmission flush')
-    ('Radiator Flush','radiator flush')
+    ('Oil','oil change'),
+    ('Air Filter','air filter'),
+    ('Fuel Filter','fuel filter'),
+    ('Spark Plug','spark plugs'),
+    ('Tire Rotation','tire rotation'),
+    ('Tire Balancing','tire balancing'),
+    ('Transmission Flush','transmission flush'),
+    ('Radiator Flush','radiator flush'),
     ('Inspection','inspection')
 ]
 
@@ -33,8 +33,8 @@ class ServiceHistory(models.Model):
     location = models.CharField(max_length=60)
     service = models.CharField(choices=services, max_length=20)
     mileage = models.BigIntegerField()
-    price = models.IntegerField()
-    date = models DateField()
+    price = models.FloatField()
+    date = models.DateField()
     note = models.CharField(max_length=300)
     
     
