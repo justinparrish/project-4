@@ -14,4 +14,4 @@ class CarSerializer(serializers.ModelSerializer):
 class ServiceHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceHistory
-        fields = ['id', 'dealership', 'location', 'service']
+        fields = ['id', 'dealership', 'location', 'service', 'mileage', 'price', 'date', 'note']
