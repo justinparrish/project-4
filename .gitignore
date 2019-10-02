@@ -6,6 +6,8 @@ car_maintenance/wsgi.py
 car_maintenance_app/migrations
 car_maintenance_app/admin.py
 car_maintenance_app/test.py
+car_maintenance_app/__pycache__
+
 
 
 
