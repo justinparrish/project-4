@@ -9,4 +9,4 @@ class OwnerSerializer(serializers.ModelSerializer):
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
-        fields = ['id', 'image_url', 'year', 'make', 'model']
+        fields = ['id', 'image_url', 'year', 'make', 'model', 'owner']
