@@ -8,6 +8,9 @@ car_maintenance_app/admin.py
 car_maintenance_app/test.py
 car_maintenance_app/__pycache__
 
+# Database
+db.sqlite3
+
 
 
 
