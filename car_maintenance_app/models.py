@@ -2,6 +2,11 @@ from django.db import models
 
 year_choice = [(x,x) for x in range(1960,2019)]
 
+services = [
+    ('brakes'),
+    ('rotors'),
+    ('oil change')
+]
 
 class Owner(models.Model):
     username = models.CharField(max_length=20, unique=True)
@@ -13,6 +18,11 @@ class Car(models.Model):
     make = models.CharField(max_length=20)
     model = models.CharField(max_length=20)
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='owners')
+    
+class ServiceHistory(models.Model):
+    dealership = models.CharField(max_length=60)
+    location = models.CharField(max_length=50)
+    service = models.ChoiceField(choices=services)
     
 
     
