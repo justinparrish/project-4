@@ -1,0 +1,14 @@
+# Project FIles
+car_maintenance/__pycache__
+car_maintenance/wsgi.py
+
+# App Files
+car_maintenance_app/migrations
+car_maintenance_app/admin.py
+car_maintenance_app/test.py
+
+
+
+
+
+
