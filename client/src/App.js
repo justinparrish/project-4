@@ -1,4 +1,5 @@
 import React from 'react';
+import { Layout } from 'react-mdl'
 
 import CarForm from './components/CarForm'
 import ServiceForm from './components/ServiceForm'
@@ -111,11 +112,10 @@ const cars =
   ]
 
 
-const App = () => {
-  return (
+class App extends React.Component {
+  render = () => (
     <div>
-      <h2>Motorboard App</h2>
-    
+
     </div>
   )
 }
