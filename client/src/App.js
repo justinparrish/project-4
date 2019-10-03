@@ -1,5 +1,9 @@
 import React from 'react';
 
+import CarForm from './components/CarForm'
+import ServiceForm from './components/ServiceForm'
+import OwnerForm from './components/OwnerForm'
+
 //---------Car Info---------
 /* will be used for card */
 const carNickname = (car) => (<li>{car.nickname} </li>)
@@ -33,52 +37,6 @@ const serviceFullInfoList = (list) => (
   <span>
     {list.map(serviceFullInfo)}
   </span>
-)
-
-const carForm = () => (
-  <form>
-    <label>Image</label>
-    <input type='text' name='image_url' placeholder='Insert URL here' />
-    <label>Nickname</label>
-    <input type='text' name='nickname' placeholder='What did you name it?' />
-    <label>Year</label>
-    <input type='number' name='year' placeholder='What year is it?' />
-    <label>Make</label>
-    <input type='text' name='make' placeholder='What is the make?' />
-    <label>Model</label>
-    <input type='text' name='model' placeholder='What is the model?' />
-    <input type='submit' value='Add Car' />
-  </form>
-)
-
-const ownerForm = () => (
-  <form>
-    <label>Username</label>
-    <input type='text' name='username' placeholder='Username Here' />
-    <label>Email</label>
-    <input type='email' name='email' placeholder='Email Here' />
-    <input type='submit' value='Add' />
-  </form>
-)
-
-const serviceForm = () => (
-  <form>
-    <label>Dealership</label>
-    <input type='text' name='dealership' placeholder='Where was it serviced?' />
-    <label>Location</label>
-    <input type='text' name='location' placeholder='Where was it located?' />
-    <label>Service</label>
-    <input type='text' name='service' placeholder='What service did you have done?' />
-    <label>Mileage</label>
-    <input type='number' name='mileage' placeholder='Miles after service' />
-    <label>Price</label>
-    <input type='number' name='price' placeholder='How much it cost?' />
-    <label>Date</label>
-    <input type='date' name='date' placeholder='When was it serviced?' />
-    <label>Note</label>
-    <input type='text' name='note' placeholder='Additional notes...' />
-    <input type='submit' value='Add Service' />
-  </form>
 )
 
 //--------Test Data Structures------------
@@ -157,7 +115,7 @@ const App = () => {
   return (
     <div>
       <h2>Motorboard App</h2>
-      {serviceForm()}
+    
     </div>
   )
 }
