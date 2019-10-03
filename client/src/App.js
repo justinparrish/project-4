@@ -114,6 +114,24 @@ const cars =
 
 
 class App extends React.Component {
+  state = {
+    activeTab: 0
+  }
+
+  toggleTab = () => {
+    if (this.state.activeTab === 0) {
+      return (
+        <h1>Log</h1>
+      )
+    }
+    else if (this.state.activeTab === 1) {
+      return (
+      <h1>Dashboard</h1>
+      )
+    }
+    
+  }
+
   render = () => (
     <div style={{height: '350px', position: 'relative'}}>
       <Layout>
@@ -123,14 +141,15 @@ class App extends React.Component {
                 <a href="#" style={{marginTop: '14px'}}><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
             </Navigation>
         </Header>
-        <Tabs>
+        <Tabs activeTab={this.state.activeTab}
+              onChange={(tabId) => this.setState({ activeTab: tabId })} ripple>
           <Tab>Log</Tab>
           <Tab>Dashboard</Tab>
         </Tabs>
         <Content>
-          <OwnerForm />
-          <ServiceForm />
-          <CarForm />
+          <div className='tab-content'>
+            {this.toggleTab()}
+          </div>
         </Content>
       </Layout>
     </div>
