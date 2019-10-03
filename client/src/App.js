@@ -1,8 +1,10 @@
 import React from 'react';
 
 //---------Car Info---------
+/* will be used for card */
 const carNickname = (car) => (<li>{car.nickname} </li>)
 const carInfo = (car) => (<p>{car.year} - {car.make} - {car.model}</p>)
+/* will be used for card */
 const carImage = (car) => (<img src={car.image_url} />)
 const carNicknameList = (car) => (<ul>{car.map(carNickname)}</ul>)
 
@@ -11,17 +13,18 @@ const username = (text) => (<li>{text.username}</li>)
 const usernameList = (list) => (<ul>{list.map(username)}</ul>)
 
 //---------Service History Info---------
+/* will link to modal of full info */
 const servicePreview = (info) => (<li>{info.service} - {info.date}</li>)
 const serviceList = (list) => (<ul>{list.map(servicePreview)}</ul>)
 
-//will be used for modal
+/* will be used for modal */
 const serviceFullInfo = (info) => (
   <div>
     <li>{info.dealership}</li>
     <li>{info.location}</li>
     <li>{info.service}</li>
     <li>{info.mileage}</li>
-    <li>{info.price}</li>
+    <li>${info.price}</li>
     <li>{info.date}</li>
     <li>{info.note}</li>
   </div>
@@ -31,6 +34,22 @@ const serviceFullInfoList = (list) => (
   <span>
     {list.map(serviceFullInfo)}
   </span>
+)
+
+const carForm = () => (
+  <form>
+    <label>Image</label>
+      <input type='text' name='image_url' placeholder='Insert URL here'/>
+    <label>Nickname</label>
+      <input type='text' name='nickname' placeholder='What did you name it?'/>
+    <label>Year</label>
+      <input type='number'name='year' placeholder='What year is it?'/>
+    <label>Make</label>
+      <input type='text' name='make' placeholder='What is the make?'/>
+    <label>Model</label>
+      <input type='text' name='model' placeholder='What is the model?'/>
+      <input type='submit' value='Add Car'/>
+  </form>
 )
 
 //--------Test Data Structures------------
@@ -109,7 +128,7 @@ const App = () => {
   return (
     <div>
       <h2>Motorboard App</h2>
-      {serviceFullInfoList(services)}
+      {carForm()}
     </div>
   )
 }
