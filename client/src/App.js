@@ -1,6 +1,6 @@
 import React from 'react';
 
-//---------For log tab and dashboard card---------
+//---------Car Info---------
 const carNickname = (car) => (
   <li>{car.nickname} </li>
 )
@@ -19,6 +19,7 @@ const carNicknameList = (car) => (
   </ul>
 )
 
+//---------Owner Info---------
 const username = (text) => (
   <li>{text.username}</li>
 )
@@ -29,9 +30,53 @@ const usernameList = (list) => (
   </ul>
 )
 
-const user = {username: 'juuuussttin'}
+//---------Service History Info---------
+const servicePreview = (info) => (
+  <li>{info.service} - {info.date}</li>
+)
 
-const users = 
+const serviceList = (list) => (
+  <ul>
+    {list.map(servicePreview)}
+  </ul>
+)
+
+const service = 
+  {
+    dealership: 'matt chevy',
+    location: 'sylvania, ga',
+    service: 'brakes',
+    mileage: 200000,
+    price: 59.90,
+    date: '2019-10-10',
+    note: 'my name is justin'
+  }
+
+const services = 
+  [
+    {
+      dealership: 'matt chevy',
+      location: 'sylvania, ga',
+      service: 'Brakes',
+      mileage: 200000,
+      price: 59.90,
+      date: '2019-10-10',
+      note: 'my name is justin'
+    },
+    {
+      dealership: 'matt chevy',
+      location: 'sylvania, ga',
+      service: 'Oil Change',
+      mileage: 200000,
+      price: 59.90,
+      date: '2019-10-09',
+      note: 'my name is justin'
+    }
+  ]
+
+const owner = {username: 'juuuussttin'}
+
+const owners = 
   [
     {username: 'juuuussttin'},
     {username: 'juuuussttin'},
@@ -71,7 +116,7 @@ const App = () => {
   return (
     <div>
     <h2>Motorboard App</h2>
-    {usernameList(users)}
+    {serviceList(services)}
     </div>
   )
 }
