@@ -9,7 +9,7 @@ class OwnerSerializer(serializers.ModelSerializer):
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
-        fields = ['id', 'image_url', 'year', 'make', 'model', 'owner']
+        fields = ['id', 'image_url', 'nickname', 'year', 'make', 'model', 'owner']
         
 class ServiceHistorySerializer(serializers.ModelSerializer):
     class Meta:

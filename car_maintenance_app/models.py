@@ -23,6 +23,7 @@ class Owner(models.Model):
 
 class Car(models.Model):
     image_url = models.CharField(max_length=300)
+    nickname = models.CharField(max_length=20)
     year = models.IntegerField(choices=year_choice)
     make = models.CharField(max_length=20)
     model = models.CharField(max_length=20)
