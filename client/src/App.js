@@ -14,6 +14,25 @@ const usernameList = (list) => (<ul>{list.map(username)}</ul>)
 const servicePreview = (info) => (<li>{info.service} - {info.date}</li>)
 const serviceList = (list) => (<ul>{list.map(servicePreview)}</ul>)
 
+//will be used for modal
+const serviceFullInfo = (info) => (
+  <div>
+    <li>{info.dealership}</li>
+    <li>{info.location}</li>
+    <li>{info.service}</li>
+    <li>{info.mileage}</li>
+    <li>{info.price}</li>
+    <li>{info.date}</li>
+    <li>{info.note}</li>
+  </div>
+)
+
+const serviceFullInfoList = (list) => (
+  <span>
+    {list.map(serviceFullInfo)}
+  </span>
+)
+
 //--------Test Data Structures------------
 const service =
 {
@@ -29,13 +48,13 @@ const service =
 const services =
   [
     {
-      dealership: 'matt chevy',
-      location: 'sylvania, ga',
+      dealership: 'stone mountain ford',
+      location: 'stone mountain, ga',
       service: 'Brakes',
-      mileage: 200000,
+      mileage: 250000,
       price: 59.90,
       date: '2019-10-10',
-      note: 'my name is justin'
+      note: 'my name is lynd'
     },
     {
       dealership: 'matt chevy',
@@ -90,7 +109,7 @@ const App = () => {
   return (
     <div>
       <h2>Motorboard App</h2>
-      {serviceList(services)}
+      {serviceFullInfoList(services)}
     </div>
   )
 }
