@@ -26,6 +26,7 @@ class Car(models.Model):
     year = models.IntegerField(choices=year_choice)
     make = models.CharField(max_length=20)
     model = models.CharField(max_length=20)
+    mileage = models.BigIntegerField()
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='owners')
     
 class ServiceHistory(models.Model):
