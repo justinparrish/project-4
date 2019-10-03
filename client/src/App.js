@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css'
-import { Header, Navigation, Layout, Tabs, Tab  } from 'react-mdl'
+import { Content, Header, Navigation, Layout, Tabs, Tab  } from 'react-mdl'
 
 import CarForm from './components/CarForm'
 import ServiceForm from './components/ServiceForm'
@@ -119,15 +119,19 @@ class App extends React.Component {
       <Layout>
       <Header title="MotorBoard" className='header-color' scroll>
             <Navigation>
-                <a href="#">Settings</a>
-                <a href="#">Home</a>
+                <a href="#" style={{marginTop: '14px'}}><i class="fa fa-cog fa-2x" aria-hidden="true"></i></a>
+                <a href="#" style={{marginTop: '14px'}}><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
             </Navigation>
         </Header>
         <Tabs>
           <Tab>Log</Tab>
           <Tab>Dashboard</Tab>
         </Tabs>
- 
+        <Content>
+          <OwnerForm />
+          <ServiceForm />
+          <CarForm />
+        </Content>
       </Layout>
     </div>
   )
