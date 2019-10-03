@@ -11,13 +11,13 @@ export default class OwnerForm extends Component {
 
         state[evnt.target.name] = evnt.target.value
 
-        this.setState(state)
+        this.setState( state )
     }
 
     handleSubmit = (evnt) => {
         evnt.preventDefault()
 
-        this.props.addNewOwner(this.state)
+        this.props.addNewOwner( this.state )
     }
 
     render() {
