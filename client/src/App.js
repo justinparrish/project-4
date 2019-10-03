@@ -1,5 +1,6 @@
 import React from 'react';
-import { Layout } from 'react-mdl'
+import './App.css'
+import { Header, Navigation, Layout, Tabs, Tab  } from 'react-mdl'
 
 import CarForm from './components/CarForm'
 import ServiceForm from './components/ServiceForm'
@@ -114,8 +115,20 @@ const cars =
 
 class App extends React.Component {
   render = () => (
-    <div>
-
+    <div style={{height: '350px', position: 'relative'}}>
+      <Layout>
+      <Header title="MotorBoard" className='header-color' scroll>
+            <Navigation>
+                <a href="#">Settings</a>
+                <a href="#">Home</a>
+            </Navigation>
+        </Header>
+        <Tabs>
+          <Tab>Log</Tab>
+          <Tab>Dashboard</Tab>
+        </Tabs>
+ 
+      </Layout>
     </div>
   )
 }
