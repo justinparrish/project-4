@@ -141,9 +141,16 @@ class App extends React.Component {
     owners: testOwner
   }
 
+  getNextId = () =>
+  //gets the max id from the isssues of the current user
+  Math.max(...this.getCurrentOwner().cars.map(car => car.id)) + 1
 
-  addNewCar = () => {
+  addNewCarForOwner = (newInfo) => {
+    let owners = {...this.state.owners}
 
+    owners[this.state.currentOwner].cars.push(newInfo)
+
+    this.setState({owners})
   }
 
   toggleTab = () => {
@@ -160,7 +167,7 @@ class App extends React.Component {
         <div>
 
           <h1>Dashboard</h1>
-          <CarForm addNewCar={this.addNewCar} />
+          <CarForm addNewCar={this.addNewCarForOwner} />
           <FABButton ripple>
             <Icon name="+" />
           </FABButton>
