@@ -29,8 +29,8 @@ const listCards = (cars) => (
 const username = (text) => (<li>{text.username}</li>)
 const usernameList = (list) => (<ul>{list.map(username)}</ul>)
 const ownerCars = (owner) => (
-  <div>
-    {owner.username}
+  <div className='owner-cars'>
+    <h6>Owner: {owner.username}</h6>
     {listCards(owner.cars)}
   </div>
 )
@@ -129,7 +129,7 @@ class App extends React.Component {
     activeTab: 1,
     currentOwner: 1,
     owners: testOwner,
-    addCar: true
+    addCar: false
   }
 
   getNextId = () =>
@@ -165,10 +165,13 @@ class App extends React.Component {
           <FABButton onClick={this.toggleAddCar} className='car-button' ripple>
             <Icon name="+" />
           </FABButton>
-          
           </header>
+          <section>
           { this.state.addCar ? <CarForm addNewCar={this.addNewCarForOwner} /> : null}
-          {ownerCars(this.getCurrentOwner())}
+          </section>
+          <aside>
+          <p>{ownerCars(this.getCurrentOwner())}</p>
+          </aside>
         </div>
       )
     }
