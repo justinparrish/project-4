@@ -10,3 +10,17 @@
   flex-wrap: wrap;
 
 }
+
+header {
+  display: flex;
+}
+
+header > h1 {
+  color: #000046;
+  order: 1;
+}
+
+header > .car-button {
+  order: 2;
+
+}

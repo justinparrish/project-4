@@ -128,7 +128,8 @@ class App extends React.Component {
   state = {
     activeTab: 1,
     currentOwner: 1,
-    owners: testOwner
+    owners: testOwner,
+    addCar: true
   }
 
   getNextId = () =>
@@ -142,6 +143,11 @@ class App extends React.Component {
 
     this.setState({owners})
   }
+      
+  toggleAddCar = () => {
+    const addCar = !this.state.addCar
+    this.setState({addCar})
+  }
 
   toggleTab = () => {
     if (this.state.activeTab === 0) {
@@ -149,18 +155,19 @@ class App extends React.Component {
         <div>
           <h1>Log</h1>
         </div>
-
       )
     }
     else if (this.state.activeTab === 1) {
       return (
         <div>
-
+          <header>
           <h1>Dashboard</h1>
-          <CarForm addNewCar={this.addNewCarForOwner} />
-          <FABButton ripple>
+          <FABButton onClick={this.toggleAddCar} className='car-button' ripple>
             <Icon name="+" />
           </FABButton>
+          
+          </header>
+          { this.state.addCar ? <CarForm addNewCar={this.addNewCarForOwner} /> : null}
           {ownerCars(this.getCurrentOwner())}
         </div>
       )
