@@ -1,21 +1,11 @@
 import React from 'react';
 import './App.css'
-import { Button, Card, CardActions, CardTitle, Content, FABButton, Header, Icon, Navigation, Layout, Tabs, Tab } from 'react-mdl'
+import { Button, Card, CardActions, CardTitle, Content, FABButton, Footer, FooterLinkList, 
+        FooterSection, Header, Icon, Navigation, Layout, Tabs, Tab } from 'react-mdl'
 
 import CarForm from './components/CarForm'
 import ServiceForm from './components/ServiceForm'
 import OwnerForm from './components/OwnerForm'
-
-//---------Car Info---------
-/* will be used for card */
-const carNickname = (car) => (`${car.nickname}`)
-const carInfo = (car) => (<li>{car.year} - {car.make} - {car.model}</li>)
-const carList = (list) => (<ul>{list.map(carInfo)}</ul>)
-/* will be used for card */
-const carImage = (car) => (`${car.image_url}`)
-const imageList = (car) => (<img src={car.map(carImage)} atl='car image' />)
-const carNicknameList = (car) => (<ul>{car.map(carNickname)}</ul>)
-
 
 
 const carCard = (car) => (
@@ -184,7 +174,7 @@ class App extends React.Component {
     Object.values(this.state.owners)
 
   render = () => (
-    <div style={{ height: '350px', position: 'relative' }}>
+    <div style={{ height: '789px', position: 'relative' }}>
       <Layout>
         <Header title="MotorBoard" className='header-color' scroll>
           <Navigation>
@@ -203,6 +193,14 @@ class App extends React.Component {
 
           </div>
         </Content>
+        <Footer size="mini">
+    <FooterSection type="left" logo="MotorBoard">
+        <FooterLinkList>
+            <a href="#">Help</a>
+            <a href="#">Privacy & Terms</a>
+        </FooterLinkList>
+    </FooterSection>
+</Footer>
       </Layout>
     </div>
   )
