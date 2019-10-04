@@ -9,20 +9,20 @@ import OwnerForm from './components/OwnerForm'
 
 
 const carCard = (car) => (
-  <Card shadow={0} style={{ width: '512px', margin: 'auto' }}>
-    <CardTitle style={{ color: '#fff', height: '176px', background: `url(${car.image_url}) center / cover` }}>
+  <Card shadow={6} style={{ width: '512px', margin: 'auto', marginBottom: '50px'}}>
+    <CardTitle style={{ color: '#fff', height: '200px', background: `url(${car.image_url}) center / cover` }}>
       {car.nickname}
     </CardTitle>
     <CardActions border>
-      <Button colored>View Log</Button>
+      <Button colored ripple>View Log</Button>
     </CardActions>
   </Card>
 )
 
 const listCards = (cars) => (
-  <span>
+  <div className='car-cards'>
     {cars.map(carCard)}
-  </span>
+  </div>
 )
 
 //---------Owner Info---------
