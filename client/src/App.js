@@ -1,15 +1,37 @@
 import React from 'react';
 import './App.css'
-import { Button, Card, CardActions, CardTitle, Content, FABButton, Footer, FooterLinkList, 
-        FooterSection, Header, Icon, Navigation, Layout, Tabs, Tab } from 'react-mdl'
+import {
+  Button, Card, CardActions, CardTitle, Content, FABButton, Footer, FooterLinkList,
+  FooterSection, Header, Icon, Navigation, Layout, Tabs, Tab
+} from 'react-mdl'
 
 import CarForm from './components/CarForm'
 import ServiceForm from './components/ServiceForm'
 import OwnerForm from './components/OwnerForm'
 
+const carImage = (car) => (
+  <Card shadow={6} style={{ width: '512px', margin: 'auto', marginBottom: '50px' }}>
+    <CardTitle style={{ color: '#fff', height: '200px', background: `url(${car.image_url}) center / cover` }}>
+      {car.nickname}
+    </CardTitle>
 
+  </Card>
+)
+const imageList = (cars) => (
+  <div>
+    {cars.map(carImage)}
+  </div>
+)
+
+const logImage = (owner) => (
+  <div>
+    {imageList(owner.cars)}
+  </div>
+)
+
+//------------Car card map ----------------
 const carCard = (car) => (
-  <Card shadow={6} style={{ width: '512px', margin: 'auto', marginBottom: '50px'}}>
+  <Card shadow={6} style={{ width: '512px', margin: 'auto', marginBottom: '50px' }}>
     <CardTitle style={{ color: '#fff', height: '200px', background: `url(${car.image_url}) center / cover` }}>
       {car.nickname}
     </CardTitle>
@@ -25,15 +47,15 @@ const listCards = (cars) => (
   </div>
 )
 
-//---------Owner Info---------
-const username = (text) => (<li>{text.username}</li>)
-const usernameList = (list) => (<ul>{list.map(username)}</ul>)
 const ownerCars = (owner) => (
   <div className='owner-cars'>
     <h6>Owner: {owner.username}</h6>
     {listCards(owner.cars)}
   </div>
 )
+//---------Owner Info---------
+const username = (text) => (<li>{text.username}</li>)
+const usernameList = (list) => (<ul>{list.map(username)}</ul>)
 
 //---------Service History Info---------
 /* will link to modal of full info */
@@ -126,51 +148,54 @@ const testOwner =
 
 class App extends React.Component {
   state = {
-    activeTab: 1,
+    activeTab: 0,
     currentOwner: 1,
     owners: testOwner,
     addCar: false
   }
 
   getNextId = () =>
-  //gets the max id from the isssues of the current user
-  Math.max(...this.getCurrentOwner().cars.map(car => car.id)) + 1
+    //gets the max id from the isssues of the current user
+    Math.max(...this.getCurrentOwner().cars.map(car => car.id)) + 1
 
   addNewCarForOwner = (newInfo) => {
-    let owners = {...this.state.owners}
+    let owners = { ...this.state.owners }
 
     owners[this.state.currentOwner].cars.push(newInfo)
 
-    this.setState({owners})
+    this.setState({ owners })
   }
-      
+
   toggleAddCar = () => {
     const addCar = !this.state.addCar
-    this.setState({addCar})
+    this.setState({ addCar })
   }
 
   toggleTab = () => {
+    // LOG TAB (list service history for one car)
     if (this.state.activeTab === 0) {
       return (
         <div>
           <h1>Log</h1>
+          {logImage(this.getCurrentOwner())}
         </div>
       )
     }
+    // DASHBOARD TAB (list all cars)
     else if (this.state.activeTab === 1) {
       return (
         <div>
           <header>
-          <h1>Dashboard</h1>
-          <FABButton onClick={this.toggleAddCar} className='car-button' ripple>
-            <Icon name="+" />
-          </FABButton>
+            <h1>Dashboard</h1>
+            <FABButton onClick={this.toggleAddCar} className='car-button' ripple>
+              <Icon name="+" />
+            </FABButton>
           </header>
           <section>
-          { this.state.addCar ? <CarForm addNewCar={this.addNewCarForOwner} /> : null}
+            {this.state.addCar ? <CarForm addNewCar={this.addNewCarForOwner} /> : null}
           </section>
           <aside>
-          <p>{ownerCars(this.getCurrentOwner())}</p>
+            <p>{ownerCars(this.getCurrentOwner())}</p>
           </aside>
         </div>
       )
@@ -204,13 +229,13 @@ class App extends React.Component {
           </div>
         </Content>
         <Footer size="mini">
-    <FooterSection type="left" logo="MotorBoard">
-        <FooterLinkList>
-            <a href="#">Help</a>
-            <a href="#">Privacy & Terms</a>
-        </FooterLinkList>
-    </FooterSection>
-</Footer>
+          <FooterSection type="left" logo="MotorBoard">
+            <FooterLinkList>
+              <a href="#">Help</a>
+              <a href="#">Privacy & Terms</a>
+            </FooterLinkList>
+          </FooterSection>
+        </Footer>
       </Layout>
     </div>
   )
