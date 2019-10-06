@@ -9,13 +9,12 @@ import CarForm from './components/CarForm'
 import ServiceForm from './components/ServiceForm'
 import OwnerForm from './components/OwnerForm'
 
+//----------Car Image (Log) ---------------
 const carImage = (car) => (
-  <Card shadow={6} style={{ width: '512px', margin: 'auto', marginBottom: '50px' }}>
-    <CardTitle style={{ color: '#fff', height: '200px', background: `url(${car.image_url}) center / cover` }}>
-      {car.nickname}
-    </CardTitle>
-
-  </Card>
+  <div>
+    <h3>{car.nickname}</h3>
+    <img src={car.image_url} style={{width: '500px'}}/>
+  </div>
 )
 const imageList = (cars) => (
   <div>
@@ -29,7 +28,7 @@ const logImage = (owner) => (
   </div>
 )
 
-//------------Car card map ----------------
+//------------Car card (Dashboard) ----------------
 const carCard = (car) => (
   <Card shadow={6} style={{ width: '512px', margin: 'auto', marginBottom: '50px' }}>
     <CardTitle style={{ color: '#fff', height: '200px', background: `url(${car.image_url}) center / cover` }}>
