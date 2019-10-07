@@ -9,6 +9,10 @@ import CarForm from './components/CarForm'
 import ServiceForm from './components/ServiceForm'
 import OwnerForm from './components/OwnerForm'
 
+//----------Single Car Info ---------------
+const carMake = (car) => (<span className='car-info'>{car.year} - {car.make} - {car.model}</span>)
+const carMakeList = (cars) => (<span>{cars.map(carMake)}</span>)
+const carDashboard = (owner) => (<span>{carMakeList(owner.cars)}</span>)
 //----------Car Image (Log) ---------------
 const carImage = (car) => (
   <div>
@@ -150,12 +154,9 @@ class App extends React.Component {
     activeTab: 0,
     currentOwner: 1,
     owners: testOwner,
-    addCar: false
+    addCar: false,
+    addHistory: false
   }
-
-  getNextId = () =>
-    //gets the max id from the isssues of the current user
-    Math.max(...this.getCurrentOwner().cars.map(car => car.id)) + 1
 
   addNewCarForOwner = (newInfo) => {
     let owners = { ...this.state.owners }
@@ -170,13 +171,22 @@ class App extends React.Component {
     this.setState({ addCar })
   }
 
+  toggleAddHistory = () => {
+    const addHistory = !this.state.addHistory
+    this.setState({ addHistory })
+  }
+
   toggleTab = () => {
     // LOG TAB (list service history for one car)
     if (this.state.activeTab === 0) {
       return (
         <div>
           <h1>Log</h1>
+          <FABButton onClick={this.toggleAddCar} className='service-button' ripple>
+              <Icon name="+" />
+            </FABButton>
           {logImage(this.getCurrentOwner())}
+          {carDashboard(this.getCurrentOwner())}
         </div>
       )
     }
