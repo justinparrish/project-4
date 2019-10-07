@@ -12,11 +12,15 @@ import OwnerForm from './components/OwnerForm'
 //----------Single Car Info ---------------
 const carMake = (car) => (<span className='car-info'>{car.year} - {car.make} - {car.model}</span>)
 const carMakeList = (cars) => (<span>{cars.map(carMake)}</span>)
-const carDashboard = (owner) => (<span>{carMakeList(owner.cars)}</span>)
+const carInfoDashboard = (owner) => (<div>{carMakeList(owner.cars)}</div>)
+
+//-----------Car Nickname ----------------
+const carNickname = (car) => (<h3>{car.nickname}</h3>)
+const nicknameList = (cars) => (<span>{cars.map(carNickname)}</span>)
+const nicknameDashboard = (owner) => (<div>{nicknameList(owner.cars)}</div>)
 //----------Car Image (Log) ---------------
 const carImage = (car) => (
   <div>
-    <h3>{car.nickname}</h3>
     <img src={car.image_url} style={{width: '500px'}}/>
   </div>
 )
@@ -181,12 +185,20 @@ class App extends React.Component {
     if (this.state.activeTab === 0) {
       return (
         <div>
+          <header>
           <h1>Log</h1>
-          <FABButton onClick={this.toggleAddCar} className='service-button' ripple>
+          <FABButton onClick={this.toggleAddHistory} className='service-button' ripple>
               <Icon name="+" />
             </FABButton>
+          {nicknameDashboard(this.getCurrentOwner())}
+          </header>
+          <section>
           {logImage(this.getCurrentOwner())}
-          {carDashboard(this.getCurrentOwner())}
+          {carInfoDashboard(this.getCurrentOwner())}
+          </section>
+          <section>
+            List of services here
+          </section>
         </div>
       )
     }
