@@ -212,19 +212,12 @@ class App extends React.Component {
             <aside>
               {this.state.addHistory ? <ServiceForm addNewServiceHistory={this.addService} /> : null}
             </aside>
-            {nicknameDashboard(this.getCurrentOwner())}
+
           </header>
-          <section>
-            {logImage(this.getCurrentOwner())}
-            {carInfoDashboard(this.getCurrentOwner())}
-          </section>
-          <section>
-            {/* {ownerCarService(this.getCurrentCar())} */}
-          </section>
         </div>
       )
     }
-    
+
     // DASHBOARD TAB (list all cars)
     else if (this.state.activeTab === 1) {
       return (

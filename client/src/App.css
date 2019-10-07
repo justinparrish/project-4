@@ -25,6 +25,12 @@ header > .car-button {
   margin-right: 2em;
 }
 
+header > .service-button {
+  float: right;
+  margin-top: 1.3em;
+  margin-right: 2em;
+}
+
 .owner-cars > h6 {
   margin-top: 0;
   padding-left: 10px
