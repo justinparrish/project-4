@@ -30,6 +30,22 @@ const carImage = (car) => (<div><img src={car.image_url} style={{ width: '500px'
 const imageList = (cars) => (<div>{cars.map(carImage)}</div>)
 const logImage = (owner) => (<div>{imageList(owner.cars)}</div>)
 
+const logTab = (car) => (
+  <div>
+    <h3>{car.nickname}</h3>
+    <img src={car.image_url} style={{ width: '500px' }} />
+    <span>
+    {car.year} - {car.make} - {car.model}
+    </span>
+    <section>
+      {ownerCarService(car)}
+    </section>
+  </div>
+)
+
+const logTabList = (cars) => (<div>{cars.map(logTab)}</div>)
+const logFull = (owner) => (<div>{logTabList(owner.cars)}</div>)
+
 //------------Car card (Dashboard) ----------------
 const carCard = (car) => (
 
@@ -236,9 +252,13 @@ class App extends React.Component {
             <aside>
               {this.state.addHistory ? <ServiceForm addNewServiceHistory={this.addService} /> : null}
             </aside>
+
           </header>
           <section>
-            {/* {servicePreview(this.getCurrentCar())} */}
+          {logFull(this.getCurrentOwner())}
+          </section>
+          <section>
+
           </section>
         </div>
       )
