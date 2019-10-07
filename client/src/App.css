@@ -35,3 +35,13 @@ header > .service-button {
   margin-top: 0;
   padding-left: 10px
 }
+
+.log-tab > section {
+  float: right;
+  margin-right: 6em;
+  text-align: center;
+}
+
+.log-tab > span {
+  font-size: 2em;
+}

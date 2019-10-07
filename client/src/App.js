@@ -31,15 +31,16 @@ const imageList = (cars) => (<div>{cars.map(carImage)}</div>)
 const logImage = (owner) => (<div>{imageList(owner.cars)}</div>)
 
 const logTab = (car) => (
-  <div>
+  <div className='log-tab'>
+    <span>
     <h3>{car.nickname}</h3>
     <img src={car.image_url} style={{ width: '500px' }} />
-    <span>
-    {car.year} - {car.make} - {car.model}
     </span>
     <section>
+    <h4>{car.year} - {car.make} - {car.model}</h4>
       {ownerCarService(car)}
     </section>
+    <hr />
   </div>
 )
 
@@ -227,7 +228,6 @@ class App extends React.Component {
   toggleAddHistory = () => {
     const addHistory = !this.state.addHistory
     this.setState({ addHistory })
-    console.log(this.getCurrentCar())
   }
 
   //----------- Getting current entity ------------
@@ -252,13 +252,9 @@ class App extends React.Component {
             <aside>
               {this.state.addHistory ? <ServiceForm addNewServiceHistory={this.addService} /> : null}
             </aside>
-
           </header>
           <section>
           {logFull(this.getCurrentOwner())}
-          </section>
-          <section>
-
           </section>
         </div>
       )
