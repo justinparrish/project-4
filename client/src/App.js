@@ -190,6 +190,9 @@ class App extends React.Component {
           <FABButton onClick={this.toggleAddHistory} className='service-button' ripple>
               <Icon name="+" />
             </FABButton>
+          <aside>
+            {this.state.addHistory ? <ServiceForm addNewServiceHistory={this.addService} /> : null}
+          </aside>
           {nicknameDashboard(this.getCurrentOwner())}
           </header>
           <section>
