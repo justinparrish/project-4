@@ -18,23 +18,11 @@ const carInfoDashboard = (owner) => (<div>{carMakeList(owner.cars)}</div>)
 const carNickname = (car) => (<h3>{car.nickname}</h3>)
 const nicknameList = (cars) => (<span>{cars.map(carNickname)}</span>)
 const nicknameDashboard = (owner) => (<div>{nicknameList(owner.cars)}</div>)
-//----------Car Image (Log) ---------------
-const carImage = (car) => (
-  <div>
-    <img src={car.image_url} style={{ width: '500px' }} />
-  </div>
-)
-const imageList = (cars) => (
-  <div>
-    {cars.map(carImage)}
-  </div>
-)
 
-const logImage = (owner) => (
-  <div>
-    {imageList(owner.cars)}
-  </div>
-)
+//----------Car Image (Log) ---------------
+const carImage = (car) => (<div><img src={car.image_url} style={{ width: '500px' }} /></div>)
+const imageList = (cars) => (<div>{cars.map(carImage)}</div>)
+const logImage = (owner) => (<div>{imageList(owner.cars)}</div>)
 
 //------------Car card (Dashboard) ----------------
 const carCard = (car) => (
@@ -48,12 +36,7 @@ const carCard = (car) => (
   </Card>
 )
 
-const listCards = (cars) => (
-  <div className='car-cards'>
-    {cars.map(carCard)}
-  </div>
-)
-
+const listCards = (cars) => (<div className='car-cards'>{cars.map(carCard)}</div>)
 const ownerCars = (owner) => (
   <div className='owner-cars'>
     <h6>Owner: {owner.username}</h6>
@@ -67,7 +50,7 @@ const usernameList = (list) => (<ul>{list.map(username)}</ul>)
 //---------Service History Info---------
 const servicePreview = (service) => (<li>{service.service} - {service.date}</li>)
 const serviceList = (services) => (<ul>{services.map(servicePreview)}</ul>)
-const ownerCarService = (car) => (serviceList(car.serive_history))
+const ownerCarService = (cars) => (serviceList(cars.service_history))
 
 
 const serviceFullInfo = (info) => (
@@ -157,11 +140,12 @@ class App extends React.Component {
   state = {
     activeTab: 0,
     currentOwner: 1,
+    currentCar: 1, 
     owners: testOwner,
     addCar: false,
     addHistory: false
   }
-
+  //---------Adding From Form ----------
   addNewCarForOwner = (newInfo) => {
     let owners = { ...this.state.owners }
 
@@ -169,7 +153,7 @@ class App extends React.Component {
 
     this.setState({ owners })
   }
-
+  //------- Toggle Forms ----------
   toggleAddCar = () => {
     const addCar = !this.state.addCar
     this.setState({ addCar })
@@ -180,6 +164,17 @@ class App extends React.Component {
     this.setState({ addHistory })
   }
 
+  //----------- Getting current entity ------------
+  getCurrentOwner = () =>
+    this.state.owners[this.state.currentOwner]
+
+  getCurrentCar = () =>
+      this.state.owners[this.state.currentOwner][this.state.currentCar]
+
+  getAllOwners = () =>
+    Object.values(this.state.owners)
+
+  //-------------- Tabs ------------------
   toggleTab = () => {
     // LOG TAB (list service history for one car)
     if (this.state.activeTab === 0) {
@@ -200,7 +195,7 @@ class App extends React.Component {
             {carInfoDashboard(this.getCurrentOwner())}
           </section>
           <section>
-            {ownerCarService(this.getCurrentOwner())}
+            {/* {ownerCarService(this.getCurrentOwner())} */}
           </section>
         </div>
       )
@@ -226,11 +221,7 @@ class App extends React.Component {
     }
 
   }
-  getCurrentOwner = () =>
-    this.state.owners[this.state.currentOwner]
 
-  getAllOwners = () =>
-    Object.values(this.state.owners)
 
   render = () => (
     <div style={{ height: '789px', position: 'relative' }}>
