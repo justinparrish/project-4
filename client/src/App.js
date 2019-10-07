@@ -170,6 +170,11 @@ const getOwnersFromServer = () => (
 
 )
 
+const getCarsFromServer = () => (
+  fetch('/api/car/')
+    .then(res => res.json())
+)
+
 class App extends React.Component {
   state = {
     activeTab: 0,
@@ -178,6 +183,17 @@ class App extends React.Component {
     addCar: false,
     addHistory: false
   }
+
+  //---------- Ajax Request -----------
+  componentDidMount = () => {
+    getOwnersFromServer().then(owners => {
+        console.log('from server: ', owners)
+      })
+    getCarsFromServer().then( cars => {
+      console.log('from server', cars)
+    })
+  }
+
   //---------Adding From Form ----------
   addNewCarForOwner = (newInfo) => {
     let owners = { ...this.state.owners }
