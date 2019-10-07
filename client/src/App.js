@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css'
+import { Link, Route, Router, Switch } from 'react-router-dom'
 import {
   Button, Card, CardActions, CardTitle, Content, FABButton, Footer, FooterLinkList,
   FooterSection, Header, Icon, Navigation, Layout, Tabs, Tab
@@ -30,12 +31,13 @@ const logImage = (owner) => (<div>{imageList(owner.cars)}</div>)
 
 //------------Car card (Dashboard) ----------------
 const carCard = (car) => (
+
   <Card shadow={6} style={{ width: '512px', margin: 'auto', marginBottom: '50px' }}>
     <CardTitle style={{ color: '#fff', height: '200px', background: `url(${car.image_url}) center / cover` }}>
       {car.nickname}
     </CardTitle>
     <CardActions border>
-      <Button colored ripple>View Log</Button>
+      <Link to={`/car/${car.id}`} ><Button colored ripple>View Log</Button></Link>
     </CardActions>
   </Card>
 )
@@ -160,9 +162,9 @@ const testOwner =
 
 class App extends React.Component {
   state = {
-    activeTab: 0,
+    activeTab: 1,
     currentOwner: 1,
-    currentCar: 1, 
+    currentCar: 1,
     owners: testOwner,
     addCar: false,
     addHistory: false
@@ -191,7 +193,7 @@ class App extends React.Component {
     this.state.owners[this.state.currentOwner]
 
   getCurrentCar = () =>
-      this.state.owners[this.state.currentOwner][this.state.currentCar]
+    this.state.owners[this.state.currentOwner][this.state.currentCar]
 
   getAllOwners = () =>
     Object.values(this.state.owners)
@@ -222,6 +224,7 @@ class App extends React.Component {
         </div>
       )
     }
+    
     // DASHBOARD TAB (list all cars)
     else if (this.state.activeTab === 1) {
       return (
