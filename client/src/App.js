@@ -21,7 +21,7 @@ const nicknameDashboard = (owner) => (<div>{nicknameList(owner.cars)}</div>)
 //----------Car Image (Log) ---------------
 const carImage = (car) => (
   <div>
-    <img src={car.image_url} style={{width: '500px'}}/>
+    <img src={car.image_url} style={{ width: '500px' }} />
   </div>
 )
 const imageList = (cars) => (
@@ -65,11 +65,11 @@ const username = (text) => (<li>{text.username}</li>)
 const usernameList = (list) => (<ul>{list.map(username)}</ul>)
 
 //---------Service History Info---------
-/* will link to modal of full info */
-const servicePreview = (info) => (<li>{info.service} - {info.date}</li>)
-const serviceList = (list) => (<ul>{list.map(servicePreview)}</ul>)
+const servicePreview = (service) => (<li>{service.service} - {service.date}</li>)
+const serviceList = (services) => (<ul>{services.map(servicePreview)}</ul>)
+const ownerCarService = (car) => (serviceList(car.serive_history))
 
-/* will be used for modal */
+
 const serviceFullInfo = (info) => (
   <div>
     <li>{info.dealership}</li>
@@ -186,21 +186,21 @@ class App extends React.Component {
       return (
         <div>
           <header>
-          <h1>Log</h1>
-          <FABButton onClick={this.toggleAddHistory} className='service-button' ripple>
+            <h1>Log</h1>
+            <FABButton onClick={this.toggleAddHistory} className='service-button' ripple>
               <Icon name="+" />
             </FABButton>
-          <aside>
-            {this.state.addHistory ? <ServiceForm addNewServiceHistory={this.addService} /> : null}
-          </aside>
-          {nicknameDashboard(this.getCurrentOwner())}
+            <aside>
+              {this.state.addHistory ? <ServiceForm addNewServiceHistory={this.addService} /> : null}
+            </aside>
+            {nicknameDashboard(this.getCurrentOwner())}
           </header>
           <section>
-          {logImage(this.getCurrentOwner())}
-          {carInfoDashboard(this.getCurrentOwner())}
+            {logImage(this.getCurrentOwner())}
+            {carInfoDashboard(this.getCurrentOwner())}
           </section>
           <section>
-            List of services here
+            {ownerCarService(this.getCurrentOwner())}
           </section>
         </div>
       )
