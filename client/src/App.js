@@ -9,6 +9,7 @@ import {
 import CarForm from './components/CarForm'
 import ServiceForm from './components/ServiceForm'
 import OwnerForm from './components/OwnerForm'
+import CarServices from './components/CarServices';
 
 //---------Owner Info---------
 const username = (text) => (<li>{text.username}</li>)
@@ -31,13 +32,12 @@ const logImage = (owner) => (<div>{imageList(owner.cars)}</div>)
 
 //------------Car card (Dashboard) ----------------
 const carCard = (car) => (
-
   <Card shadow={6} style={{ width: '512px', margin: 'auto', marginBottom: '50px' }}>
     <CardTitle style={{ color: '#fff', height: '200px', background: `url(${car.image_url}) center / cover` }}>
       {car.nickname}
     </CardTitle>
     <CardActions border>
-      <Link to={`/car/${car.id}`} ><Button colored ripple>View Log</Button></Link>
+      <Link to={`/${car.id}`} ><Button colored ripple>View Log</Button></Link>
     </CardActions>
   </Card>
 )
@@ -204,6 +204,11 @@ class App extends React.Component {
     if (this.state.activeTab === 0) {
       return (
         <div>
+
+              <Router>
+                <Switch>
+                <Route exact path='/' render={() => (
+
           <header>
             <h1>Log</h1>
             <FABButton onClick={this.toggleAddHistory} className='service-button' ripple>
@@ -212,8 +217,13 @@ class App extends React.Component {
             <aside>
               {this.state.addHistory ? <ServiceForm addNewServiceHistory={this.addService} /> : null}
             </aside>
-
           </header>
+                )} />
+                <Route path='/:id' component={CarServices} />
+                </Switch>
+              </Router>
+
+
         </div>
       )
     }
@@ -232,7 +242,7 @@ class App extends React.Component {
             {this.state.addCar ? <CarForm addNewCar={this.addNewCarForOwner} /> : null}
           </section>
           <aside>
-            <p>{ownerCars(this.getCurrentOwner())}</p>
+            {ownerCars(this.getCurrentOwner())}
           </aside>
         </div>
       )
@@ -246,8 +256,8 @@ class App extends React.Component {
       <Layout>
         <Header title="MotorBoard" className='header-color' scroll>
           <Navigation>
-            <a href="#" style={{ marginTop: '14px' }}><i class="fa fa-cog fa-2x" aria-hidden="true"></i></a>
-            <a href="#" style={{ marginTop: '14px' }}><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
+            <a href="#" style={{ marginTop: '14px' }}><i className="fa fa-cog fa-2x" aria-hidden="true"></i></a>
+            <a href="#" style={{ marginTop: '14px' }}><i className="fa fa-home fa-2x" aria-hidden="true"></i></a>
           </Navigation>
         </Header>
         <Tabs activeTab={this.state.activeTab}
