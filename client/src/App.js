@@ -32,12 +32,13 @@ const logImage = (owner) => (<div>{imageList(owner.cars)}</div>)
 
 //------------Car card (Dashboard) ----------------
 const carCard = (car) => (
+
   <Card shadow={6} style={{ width: '512px', margin: 'auto', marginBottom: '50px' }}>
     <CardTitle style={{ color: '#fff', height: '200px', background: `url(${car.image_url}) center / cover` }}>
       {car.nickname}
     </CardTitle>
     <CardActions border>
-      <Link to={`/${car.id}`} ><Button colored ripple>View Log</Button></Link>
+<Button colored ripple>View Log</Button>
     </CardActions>
   </Card>
 )
@@ -72,6 +73,9 @@ const serviceFullInfoList = (list) => (
     {list.map(serviceFullInfo)}
   </span>
 )
+
+
+
 
 //--------Test Data Structures------------
 
@@ -160,11 +164,16 @@ const testOwner =
   }
 }
 
+const getOwnersFromServer = () => (
+  fetch('/api/owner/')
+    .then(res => res.json())
+
+)
+
 class App extends React.Component {
   state = {
-    activeTab: 1,
+    activeTab: 0,
     currentOwner: 1,
-    currentCar: 1,
     owners: testOwner,
     addCar: false,
     addHistory: false
@@ -186,15 +195,14 @@ class App extends React.Component {
   toggleAddHistory = () => {
     const addHistory = !this.state.addHistory
     this.setState({ addHistory })
+    console.log(this.getCurrentCar())
   }
 
   //----------- Getting current entity ------------
   getCurrentOwner = () =>
     this.state.owners[this.state.currentOwner]
 
-  getCurrentCar = () =>
-    this.state.owners[this.state.currentOwner][this.state.currentCar]
-
+    
   getAllOwners = () =>
     Object.values(this.state.owners)
 
@@ -204,11 +212,6 @@ class App extends React.Component {
     if (this.state.activeTab === 0) {
       return (
         <div>
-
-              <Router>
-                <Switch>
-                <Route exact path='/' render={() => (
-
           <header>
             <h1>Log</h1>
             <FABButton onClick={this.toggleAddHistory} className='service-button' ripple>
@@ -218,12 +221,9 @@ class App extends React.Component {
               {this.state.addHistory ? <ServiceForm addNewServiceHistory={this.addService} /> : null}
             </aside>
           </header>
-                )} />
-                <Route path='/:id' component={CarServices} />
-                </Switch>
-              </Router>
-
-
+          <section>
+            {/* {servicePreview(this.getCurrentCar())} */}
+          </section>
         </div>
       )
     }
@@ -268,7 +268,6 @@ class App extends React.Component {
         <Content>
           <div className='tab-content'>
             {this.toggleTab()}
-
           </div>
         </Content>
         <Footer size="mini">
