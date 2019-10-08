@@ -16,8 +16,18 @@ import CarServices from './components/CarServices';
 const username = (text) => (<li>{text.username}</li>)
 const usernameList = (list) => (<ul>{list.map(username)}</ul>)
 
+const ownerUsernames = (owner) => (
+  <option value={owner.id}>{owner.username}</option>
+)
+
+const ownerList = (owners, currentOwner, onChange) => (
+  <select value={currentOwner} onChange={(evnt) => onChange(evnt.target.value)}>
+    {owners.map(ownerUsernames)}
+  </select>
+)
+
 //----------Single Car Info ---------------
-const carMake = (car) => (<span className='car-info'>{car.year} - {car.make} - {car.model}</span>)
+const carMake = (car) => (<span className='car-info'>`{car.year} - {car.make} - {car.model}`</span>)
 const carMakeList = (cars) => (<span>{cars.map(carMake)}</span>)
 const carInfoDashboard = (owner) => (<div>{carMakeList(owner.cars)}</div>)
 
@@ -45,7 +55,7 @@ const serviceList = (services) => (
   <List style={{ width: 500 }} className='service-list-ant'>
     {services.map(servicePreview)}
   </List>
-)
+) 
 const ownerCarService = (cars) => (serviceList(cars.service_history))
 
 //----------- Log Tab Layout --------------
@@ -56,7 +66,7 @@ const logTab = (car) => (
       <img src={car.image_url} style={{ width: '500px' }} />
     </span>
     <section>
-      <h4>{car.year} - {car.make} - {car.model}</h4>
+      <h4>{car.year}  {car.make}  {car.model}</h4>
       {ownerCarService(car)}
     </section>
     <hr />
@@ -122,7 +132,7 @@ const testOwner =
   //-----------------------------------------------------------
   2:
   {
-    id: 3,
+    id: 2,
     username: 'lynd21',
     email: 'justin@gmail.com',
     cars:
@@ -214,7 +224,7 @@ class App extends React.Component {
 
     owners[newOwner.id] = newOwner 
 
-    this.setState({ owners})
+    this.setState({ owners, currentOwner: newOwner.id})
     console.log(this.state.owners)
   }
 
@@ -248,6 +258,10 @@ class App extends React.Component {
 
   getAllOwners = () =>
     Object.values(this.state.owners)
+
+  setCurrentUser = (currentOwner) => {
+    this.setState({ currentOwner })
+    }
 
   //-------------- Tabs ------------------
   toggleTab = () => {
@@ -299,6 +313,7 @@ class App extends React.Component {
           <h1>Owner</h1>
           </header>
           <OwnerForm addNewOwner={this.addOwner}/>
+          {ownerList(this.getAllOwners(), this.state.currentOwner, this.setCurrentUser)}
         </div>
       )
     }
