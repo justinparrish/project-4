@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css'
-import { Link, Route, Router, Switch } from 'react-router-dom'
+// import { Link, Route, Router, Switch } from 'react-router-dom'
 import {
   Button, Card, CardActions, CardTitle, Content, FABButton, Footer, FooterLinkList,
   FooterSection, Header, Icon, List, ListItem, ListItemContent, Navigation, Layout, Tabs, Tab
@@ -9,12 +9,8 @@ import {
 import CarForm from './components/CarForm'
 import ServiceForm from './components/ServiceForm'
 import OwnerForm from './components/OwnerForm'
-import CarServices from './components/CarServices';
 
 //---------Owner Info---------
-const username = (text) => (<li>{text.username}</li>)
-const usernameList = (list) => (<ul>{list.map(username)}</ul>)
-
 const ownerUsernames = (owner) => (
   <option value={owner.id}>{owner.username}</option>
 )
@@ -24,22 +20,6 @@ const ownerList = (owners, currentOwner, onChange) => (
     {owners.map(ownerUsernames)}
   </select>
 )
-
-//----------Single Car Info ---------------
-const carMake = (car) => (<span className='car-info'>`{car.year} - {car.make} - {car.model}`</span>)
-const carMakeList = (cars) => (<span>{cars.map(carMake)}</span>)
-const carInfoDashboard = (owner) => (<div>{carMakeList(owner.cars)}</div>)
-
-//-----------Car Nickname ----------------
-const carNickname = (car) => (<h3>{car.nickname}</h3>)
-const nicknameList = (cars) => (<span>{cars.map(carNickname)}</span>)
-const nicknameDashboard = (owner) => (<div>{nicknameList(owner.cars)}</div>)
-
-//----------Car Image (Log) ---------------
-const carImage = (car) => (<div><img src={car.image_url} style={{ width: '500px' }} /></div>)
-const imageList = (cars) => (<div>{cars.map(carImage)}</div>)
-const logImage = (owner) => (<div>{imageList(owner.cars)}</div>)
-
 
 //---------Service History Info---------
 const servicePreview = (service) => (
@@ -62,7 +42,7 @@ const logTab = (car) => (
   <div className='log-tab'>
     <span>
       <h3>{car.nickname}</h3>
-      <img src={car.image_url} style={{ width: '500px' }} />
+      <img src={car.image_url} style={{ width: '500px' }} alt={`${car.nickname}`}/>
     </span>
     <section>
       <h4>{car.year}  {car.make}  {car.model}</h4>
@@ -160,7 +140,7 @@ const testOwner =
       ]
   }
 }
-/* Fetch to GET
+// Fetch to GET
 const getOwnersFromServer = () => (
   fetch('/api/owner/')
     .then(res => res.json())
@@ -171,7 +151,7 @@ const getCarsFromServer = () => (
   fetch('/api/car/')
     .then(res => res.json())
 )
-*/
+
 
 class App extends React.Component {
   state = {
@@ -184,7 +164,7 @@ class App extends React.Component {
     swap: false
   }
 
-  /* Ajax Request 
+  //Ajax Request 
   componentDidMount = () => {
     getOwnersFromServer().then(owners => {
         console.log('from server: ', owners)
@@ -193,7 +173,7 @@ class App extends React.Component {
       console.log('from server', cars)
     })
   }
-  */
+  
 
   //---------Adding From Form ----------
   addNewCarForOwner = (newCar) => {
