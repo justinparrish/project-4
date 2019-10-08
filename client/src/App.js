@@ -254,6 +254,10 @@ class App extends React.Component {
   linkToDashboard = () => {
     this.setState({ activeTab: 1 })
   }
+
+  linkToLog = () => {
+    this.setState({ activeTab: 0 })
+  }
   //----------- Getting current entity ------------
   getCurrentOwner = () =>
     this.state.owners[this.state.currentOwner]
