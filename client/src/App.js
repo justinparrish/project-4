@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css'
 import { Link, Route, Router, Switch } from 'react-router-dom'
-
 import {
   Button, Card, CardActions, CardTitle, Content, FABButton, Footer, FooterLinkList,
   FooterSection, Header, Icon, List, ListItem, ListItemContent, Navigation, Layout, Tabs, Tab
@@ -55,7 +54,7 @@ const serviceList = (services) => (
   <List style={{ width: 500 }} className='service-list-ant'>
     {services.map(servicePreview)}
   </List>
-) 
+)
 const ownerCarService = (cars) => (serviceList(cars.service_history))
 
 //----------- Log Tab Layout --------------
@@ -181,7 +180,8 @@ class App extends React.Component {
     owners: testOwner,
     addCar: false,
     addHistory: false,
-    showOwners: false
+    showOwners: false,
+    swap: false
   }
 
   /* Ajax Request 
@@ -222,9 +222,9 @@ class App extends React.Component {
 
     let owners = { ...this.state.owners }
 
-    owners[newOwner.id] = newOwner 
+    owners[newOwner.id] = newOwner
 
-    this.setState({ owners, currentOwner: newOwner.id})
+    this.setState({ owners, currentOwner: newOwner.id })
     console.log(this.state.owners)
   }
 
@@ -240,6 +240,11 @@ class App extends React.Component {
     this.setState({ addHistory })
   }
 
+  toggleSwap = () => {
+    const swap = !this.state.swap
+    this.setState({ swap })
+  }
+
   //--------- Menu Button Actions -------------
   toggleOwner = () => {
     const showOwners = !this.state.showOwners
@@ -247,7 +252,7 @@ class App extends React.Component {
   }
 
   linkToDashboard = () => {
-    this.setState({ activeTab: 1})
+    this.setState({ activeTab: 1 })
   }
   //----------- Getting current entity ------------
   getCurrentOwner = () =>
@@ -261,7 +266,7 @@ class App extends React.Component {
 
   setCurrentUser = (currentOwner) => {
     this.setState({ currentOwner })
-    }
+  }
 
   //-------------- Tabs ------------------
   toggleTab = () => {
@@ -310,10 +315,15 @@ class App extends React.Component {
       return (
         <div>
           <header>
-          <h1>Owner</h1>
+            <h1>Owner</h1>
+            <Button onClick={this.toggleSwap} className='car-button' raised colored>
+              { this.state.swap ? 'Existing Owner' : 'New Owner'}
+            </Button>
           </header>
-          <OwnerForm addNewOwner={this.addOwner}/>
-          {ownerList(this.getAllOwners(), this.state.currentOwner, this.setCurrentUser)}
+          {
+            this.state.swap ? <OwnerForm addNewOwner={this.addOwner} /> :
+            ownerList(this.getAllOwners(), this.state.currentOwner, this.setCurrentUser)
+          }
         </div>
       )
     }
