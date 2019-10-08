@@ -220,8 +220,11 @@ class App extends React.Component {
   toggleOwner = () => {
     const showOwners = !this.state.showOwners
     this.setState({ showOwners })
-}
+  }
 
+  linkToDashboard = () => {
+    this.setState({ activeTab: 1})
+  }
   //----------- Getting current entity ------------
   getCurrentOwner = () =>
     this.state.owners[this.state.currentOwner]
@@ -283,14 +286,14 @@ class App extends React.Component {
         <Header title="MotorBoard" className='header-color' scroll>
           <Navigation>
             <a onClick={this.toggleOwner} style={{ marginTop: '14px' }}><i className="fa fa-cog fa-2x" aria-hidden="true"></i></a>
-            <a href="#" style={{ marginTop: '14px' }}><i className="fa fa-home fa-2x" aria-hidden="true"></i></a>
+            <a onClick={this.linkToDashboard} style={{ marginTop: '14px' }}><i className="fa fa-home fa-2x" aria-hidden="true"></i></a>
           </Navigation>
         </Header>
         <Tabs activeTab={this.state.activeTab}
           onChange={(tabId) => this.setState({ activeTab: tabId })} ripple>
           <Tab>Log</Tab>
           <Tab>Dashboard</Tab>
-          {this.state.showOwners ? <Tab>Owner</Tab> : <Tab disabled>Owner</Tab>  }
+          {this.state.showOwners ? <Tab>Owner</Tab> : <Tab disabled>Owner</Tab>}
         </Tabs>
         <Content>
           <div className='tab-content'>
