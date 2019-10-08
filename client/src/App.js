@@ -186,14 +186,16 @@ class App extends React.Component {
   */
 
   //---------Adding From Form ----------
-  addNewCarForOwner = (newInfo) => {
+  addNewCarForOwner = (newCar) => {
+    newCar.service_history = []
+
     let owners = { ...this.state.owners }
 
-    owners[this.state.currentOwner].cars.push(newInfo)
+    owners[this.state.currentOwner].cars.push(newCar)
 
 
     this.setState({ owners })
-    console.log(this.state)
+    console.log(this.state.owners)
   }
 
   addServiceToCar = (newInfo) => {

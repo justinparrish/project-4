@@ -9,19 +9,7 @@ export default class CarForm extends Component {
     year: '',
     make: '',
     model: '',
-    service_history:
-            [
-              {
-                id: 2,
-                dealership: '',
-                location: '',
-                service: '',
-                mileage: 0,
-                price: 0 ,
-                date: '',
-                note: ''
-              }
-            ]
+    
   }
 
   handleInput = (evnt) => {
