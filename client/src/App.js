@@ -31,6 +31,13 @@ const carImage = (car) => (<div><img src={car.image_url} style={{ width: '500px'
 const imageList = (cars) => (<div>{cars.map(carImage)}</div>)
 const logImage = (owner) => (<div>{imageList(owner.cars)}</div>)
 
+
+//---------Service History Info---------
+const servicePreview = (service) => (<li>{service.service} - {service.date}</li>)
+const serviceList = (services) => (<ul>{services.map(servicePreview)}</ul>)
+const ownerCarService = (cars) => (serviceList(cars.service_history))
+
+
 const logTab = (car) => (
   <div className='log-tab'>
     <span>
@@ -44,6 +51,27 @@ const logTab = (car) => (
     <hr />
   </div>
 )
+
+const serviceFullInfo = (info) => (
+  <div>
+    <li>{info.dealership}</li>
+    <li>{info.location}</li>
+    <li>{info.service}</li>
+    <li>{info.mileage}</li>
+    <li>${info.price}</li>
+    <li>{info.date}</li>
+    <li>{info.note}</li>
+  </div>
+)
+const serviceFullInfoList = (list) => (
+  <span>
+    {list.map(serviceFullInfo)}
+  </span>
+)
+
+
+
+
 
 const logTabList = (cars) => (<div>{cars.map(logTab)}</div>)
 const logFull = (owner) => (<div>{logTabList(owner.cars)}</div>)
@@ -69,28 +97,9 @@ const ownerCars = (owner) => (
   </div>
 )
 
-//---------Service History Info---------
-const servicePreview = (service) => (<li>{service.service} - {service.date}</li>)
-const serviceList = (services) => (<ul>{services.map(servicePreview)}</ul>)
-const ownerCarService = (cars) => (serviceList(cars.service_history))
 
 
-const serviceFullInfo = (info) => (
-  <div>
-    <li>{info.dealership}</li>
-    <li>{info.location}</li>
-    <li>{info.service}</li>
-    <li>{info.mileage}</li>
-    <li>${info.price}</li>
-    <li>{info.date}</li>
-    <li>{info.note}</li>
-  </div>
-)
-const serviceFullInfoList = (list) => (
-  <span>
-    {list.map(serviceFullInfo)}
-  </span>
-)
+
 
 
 
@@ -199,8 +208,10 @@ class App extends React.Component {
     let owners = { ...this.state.owners }
 
     owners[this.state.currentOwner].cars.push(newInfo)
-
+    
+    
     this.setState({ owners })
+    console.log(this.state)
   }
 
   addService = (newInfo) => {
@@ -214,7 +225,7 @@ class App extends React.Component {
   //------- Toggle Forms ----------
   toggleAddCar = () => {
     const addCar = !this.state.addCar
-    console.log(this.state.owners[this.state.currentOwner].cars[0].service_history)
+
     this.setState({ addCar })
   }
 
