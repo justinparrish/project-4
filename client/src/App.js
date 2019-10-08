@@ -140,11 +140,23 @@ const testOwner =
       ]
   }
 }
+
+
+const objectFromListById = (owners, cars, service_history) => (
+  owners.reduce((obj, owner) => {
+    owner.cars = cars.filter(car => car.owner === owner.id)
+    cars.service_history = service_history.filter((car,service) => service.car === car.id)
+    obj[owner.id] = owner
+    return obj
+  }, {})
+)
+
+
 // Fetch to GET
+
 const getOwnersFromServer = () => (
   fetch('/api/owner/')
     .then(res => res.json())
-
 )
 
 const getCarsFromServer = () => (
@@ -152,26 +164,38 @@ const getCarsFromServer = () => (
     .then(res => res.json())
 )
 
+const getServiceHistoryFromServer = () => (
+  fetch('/api/service/')
+    .then(res => res.json())
+)
+
+
+const getAllFromServer = () => (
+  getOwnersFromServer().then(owners =>
+    getCarsFromServer().then(cars =>
+      getServiceHistoryFromServer().then(services=>
+        objectFromListById(owners, cars, services)
+        )))
+)
 
 class App extends React.Component {
   state = {
-    activeTab: 0,
+    activeTab: 2,
     currentOwner: 1,
     owners: testOwner,
     addCar: false,
     addHistory: false,
     showOwners: false,
-    swap: false
+    swap: true
   }
 
   //Ajax Request 
   componentDidMount = () => {
-    getOwnersFromServer().then(owners => {
-        console.log('from server: ', owners)
+    getAllFromServer()
+      .then(owners => {
+        this.setState({ owners })
       })
-    getCarsFromServer().then( cars => {
-      console.log('from server', cars)
-    })
+
   }
   
 
@@ -211,7 +235,7 @@ class App extends React.Component {
   //------- Toggle Forms ----------
   toggleAddCar = () => {
     const addCar = !this.state.addCar
-
+    console.log(this.state.owners)
     this.setState({ addCar })
   }
 
@@ -239,7 +263,7 @@ class App extends React.Component {
     this.setState({ activeTab: 0 })
   }
   //----------- Getting current entity ------------
-  getCurrentOwner = () =>
+  getCurrentOwner = () => 
     this.state.owners[this.state.currentOwner]
 
   getCurrentCar = () =>
