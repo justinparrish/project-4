@@ -125,30 +125,10 @@ const testOwner =
                 note: 'my name is lynd'
               }
             ]
-        },
-        {
-          id: 2
-          , image_url: 'http://carphotos.cardomain.com/ride_images/2/3630/1381/21573190006_large.jpg'
-          , nickname: 'white car'
-          , year: 1990
-          , make: 'geo'
-          , model: 'prizm'
-          , service_history:
-            [
-              {
-                id: 1,
-                dealership: 'stone mountain ford',
-                location: 'stone mountain, ga',
-                service: 'Brakes',
-                mileage: 250000,
-                price: 59.90,
-                date: '2019-10-10',
-                note: 'my name is lynd'
-              }
-            ]
         }
       ]
   },
+  //-----------------------------------------------------------
   2:
   {
     id: 3,
@@ -195,7 +175,7 @@ const getCarsFromServer = () => (
 
 class App extends React.Component {
   state = {
-    activeTab: 0,
+    activeTab: 1,
     currentOwner: 1,
     owners: testOwner,
     addCar: false,
@@ -221,9 +201,17 @@ class App extends React.Component {
 
     this.setState({ owners })
   }
+
+  // addService = (newInfo) => {
+  //   let owners = { ...this.state.owners }
+    
+  //   owners[this.state.currentOwner]
+  // }
+
   //------- Toggle Forms ----------
   toggleAddCar = () => {
     const addCar = !this.state.addCar
+    console.log(this.state.owners[this.state.currentOwner].cars[0].service_history)
     this.setState({ addCar })
   }
 
@@ -236,6 +224,8 @@ class App extends React.Component {
   getCurrentOwner = () =>
     this.state.owners[this.state.currentOwner]
 
+  getCurrentCar = () => 
+    this.state.owners[this.state.currentOwner].cars
     
   getAllOwners = () =>
     Object.values(this.state.owners)
