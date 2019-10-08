@@ -277,6 +277,18 @@ class App extends React.Component {
       )
     }
 
+    //Owner Tab (add new owner)
+    else if (this.state.activeTab === 2) {
+      return (
+        <div>
+          <header>
+          <h1>Owner</h1>
+          </header>
+          <OwnerForm />
+        </div>
+      )
+    }
+
   }
 
 
