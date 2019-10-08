@@ -180,7 +180,7 @@ const testOwner =
       ]
   }
 }
-
+/* Fetch to GET
 const getOwnersFromServer = () => (
   fetch('/api/owner/')
     .then(res => res.json())
@@ -191,6 +191,7 @@ const getCarsFromServer = () => (
   fetch('/api/car/')
     .then(res => res.json())
 )
+*/
 
 class App extends React.Component {
   state = {
@@ -201,7 +202,7 @@ class App extends React.Component {
     addHistory: false
   }
 
-  //---------- Ajax Request -----------
+  /* Ajax Request 
   componentDidMount = () => {
     getOwnersFromServer().then(owners => {
         console.log('from server: ', owners)
@@ -210,6 +211,7 @@ class App extends React.Component {
       console.log('from server', cars)
     })
   }
+  */
 
   //---------Adding From Form ----------
   addNewCarForOwner = (newInfo) => {
