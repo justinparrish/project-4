@@ -202,11 +202,13 @@ class App extends React.Component {
     this.setState({ owners })
   }
 
-  // addService = (newInfo) => {
-  //   let owners = { ...this.state.owners }
+  addService = (newInfo) => {
+    let owners = { ...this.state.owners }
     
-  //   owners[this.state.currentOwner]
-  // }
+    owners[this.state.currentOwner].cars[0].service_history.push(newInfo)
+
+    this.setState({ owners })
+  }
 
   //------- Toggle Forms ----------
   toggleAddCar = () => {
