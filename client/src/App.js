@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css'
 import { Link, Route, Router, Switch } from 'react-router-dom'
-import { List, message, Avatar, Spin } from 'antd';
+
 import {
   Button, Card, CardActions, CardTitle, Content, FABButton, Footer, FooterLinkList,
-  FooterSection, Header, Icon, Navigation, Layout, Tabs, Tab
-        } from 'react-mdl'
+  FooterSection, Header, Icon, List, ListItem, ListItemContent, Navigation, Layout, Tabs, Tab
+} from 'react-mdl'
 
 import CarForm from './components/CarForm'
 import ServiceForm from './components/ServiceForm'
@@ -33,19 +33,32 @@ const logImage = (owner) => (<div>{imageList(owner.cars)}</div>)
 
 
 //---------Service History Info---------
-const servicePreview = (service) => (<li>{service.service} - {service.date}</li>)
-const serviceList = (services) => (<ul>{services.map(servicePreview)}</ul>)
+const servicePreview = (service) => (
+  <ListItem threeLine>
+    <ListItemContent subtitle={`Was serviced at ${service.dealership} in ${service.location}.
+    The cost of the service was $${service.price}. The vehicle left with ${service.mileage} miles.`}>
+      {service.service} {service.date}
+    </ListItemContent>
+  </ListItem>
+)
+const serviceList = (services) => (
+  <List style={{ width: 500 }} className='service-list-ant'>
+    {services.map(servicePreview)}
+  </List>
+)
 const ownerCarService = (cars) => (serviceList(cars.service_history))
+
+
 
 
 const logTab = (car) => (
   <div className='log-tab'>
     <span>
-    <h3>{car.nickname}</h3>
-    <img src={car.image_url} style={{ width: '500px' }} />
+      <h3>{car.nickname}</h3>
+      <img src={car.image_url} style={{ width: '500px' }} />
     </span>
     <section>
-    <h4>{car.year} - {car.make} - {car.model}</h4>
+      <h4>{car.year} - {car.make} - {car.model}</h4>
       {ownerCarService(car)}
     </section>
     <hr />
@@ -84,7 +97,7 @@ const carCard = (car) => (
       {car.nickname}
     </CardTitle>
     <CardActions border>
-<Button colored ripple>View Log</Button>
+      <Button colored ripple>View Log</Button>
     </CardActions>
   </Card>
 )
@@ -130,7 +143,7 @@ const testOwner =
                 location: 'stone mountain, ga',
                 service: 'Brakes',
                 mileage: 250000,
-                price: 59.90,
+                price: 59.99,
                 date: '2019-10-10',
                 note: 'my name is lynd'
               }
@@ -185,7 +198,7 @@ const getCarsFromServer = () => (
 
 class App extends React.Component {
   state = {
-    activeTab: 1,
+    activeTab: 0,
     currentOwner: 1,
     owners: testOwner,
     addCar: false,
@@ -208,15 +221,15 @@ class App extends React.Component {
     let owners = { ...this.state.owners }
 
     owners[this.state.currentOwner].cars.push(newInfo)
-    
-    
+
+
     this.setState({ owners })
     console.log(this.state)
   }
 
   addService = (newInfo) => {
     let owners = { ...this.state.owners }
-    
+
     owners[this.state.currentOwner].cars[0].service_history.push(newInfo)
 
     this.setState({ owners })
@@ -238,9 +251,9 @@ class App extends React.Component {
   getCurrentOwner = () =>
     this.state.owners[this.state.currentOwner]
 
-  getCurrentCar = () => 
+  getCurrentCar = () =>
     this.state.owners[this.state.currentOwner].cars
-    
+
   getAllOwners = () =>
     Object.values(this.state.owners)
 
@@ -260,7 +273,7 @@ class App extends React.Component {
             </aside>
           </header>
           <section>
-          {logFull(this.getCurrentOwner())}
+            {logFull(this.getCurrentOwner())}
           </section>
         </div>
       )
