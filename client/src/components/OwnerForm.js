@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Textfield } from 'react-mdl'
+import { Form, Input, Button } from 'antd'
 
 export default class OwnerForm extends Component {
     state = {
@@ -23,13 +23,15 @@ export default class OwnerForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-              <label>Username</label>
-              <input type='text' name='username' placeholder='Username Here' onChange={this.handleInput} />
-              <label>Email</label>
-              <input type='email' name='email' placeholder='Email Here' onChange={this.handleInput}/>
-              <input type='submit' value='Add' />
-            </form>
+            <Form onSubmit={this.handleSubmit} layout='horizontal'>
+              <Form.Item label='Username'>
+              <Input type='text' name='username' placeholder='Username Here' onChange={this.handleInput} />
+              </Form.Item>
+              <Form.Item label='Email'>
+              <Input type='email' name='email' placeholder='Email Here' onChange={this.handleInput}/>
+              </Form.Item>
+              <Button type='primary' htmlType='submit'>New Owner</Button>
+            </Form>
           )
     }
 }
