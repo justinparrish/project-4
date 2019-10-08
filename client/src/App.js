@@ -196,12 +196,24 @@ class App extends React.Component {
     console.log(this.state)
   }
 
-  addService = (newInfo) => {
+  addServiceToCar = (newInfo) => {
     let owners = { ...this.state.owners }
 
     owners[this.state.currentOwner].cars[0].service_history.push(newInfo)
 
     this.setState({ owners })
+  }
+
+  addOwner = (newOwner) => {
+    newOwner.cars = []
+    newOwner.id = 9
+
+    let owners = { ...this.state.owners }
+
+    owners[newOwner.id] = newOwner 
+
+    this.setState({ owners})
+    console.log(this.state.owners)
   }
 
   //------- Toggle Forms ----------
@@ -216,7 +228,7 @@ class App extends React.Component {
     this.setState({ addHistory })
   }
 
-  //--------- Toggle Owner -------------
+  //--------- Menu Button Actions -------------
   toggleOwner = () => {
     const showOwners = !this.state.showOwners
     this.setState({ showOwners })
@@ -247,7 +259,7 @@ class App extends React.Component {
               <Icon name="+" />
             </FABButton>
             <aside>
-              {this.state.addHistory ? <ServiceForm addNewServiceHistory={this.addService} /> : null}
+              {this.state.addHistory ? <ServiceForm addNewServiceHistory={this.addServiceToCar} /> : null}
             </aside>
           </header>
           <section>
@@ -284,7 +296,7 @@ class App extends React.Component {
           <header>
           <h1>Owner</h1>
           </header>
-          <OwnerForm />
+          <OwnerForm addNewOwner={this.addOwner}/>
         </div>
       )
     }
