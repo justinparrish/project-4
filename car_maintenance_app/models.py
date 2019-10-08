@@ -3,19 +3,6 @@ import datetime
 
 year_choice = [(x,x) for x in range(1960,2019)]
 
-services = [
-    ('Brake Pads','brakes'),
-    ('Brake Rotors','rotors'),
-    ('Oil','oil change'),
-    ('Air Filter','air filter'),
-    ('Fuel Filter','fuel filter'),
-    ('Spark Plug','spark plugs'),
-    ('Tire Rotation','tire rotation'),
-    ('Tire Balancing','tire balancing'),
-    ('Transmission Flush','transmission flush'),
-    ('Radiator Flush','radiator flush'),
-    ('Inspection','inspection')
-]
 
 class Owner(models.Model):
     username = models.CharField(max_length=20, unique=True)
@@ -32,7 +19,7 @@ class Car(models.Model):
 class ServiceHistory(models.Model):
     dealership = models.CharField(max_length=60)
     location = models.CharField(max_length=60)
-    service = models.CharField(choices=services, max_length=20)
+    service = models.CharField(max_length=20)
     mileage = models.BigIntegerField()
     price = models.FloatField()
     date = models.DateField()
