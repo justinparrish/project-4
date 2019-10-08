@@ -48,9 +48,7 @@ const serviceList = (services) => (
 )
 const ownerCarService = (cars) => (serviceList(cars.service_history))
 
-
-
-
+//----------- Log Tab Layout --------------
 const logTab = (car) => (
   <div className='log-tab'>
     <span>
@@ -64,28 +62,6 @@ const logTab = (car) => (
     <hr />
   </div>
 )
-
-const serviceFullInfo = (info) => (
-  <div>
-    <li>{info.dealership}</li>
-    <li>{info.location}</li>
-    <li>{info.service}</li>
-    <li>{info.mileage}</li>
-    <li>${info.price}</li>
-    <li>{info.date}</li>
-    <li>{info.note}</li>
-  </div>
-)
-const serviceFullInfoList = (list) => (
-  <span>
-    {list.map(serviceFullInfo)}
-  </span>
-)
-
-
-
-
-
 const logTabList = (cars) => (<div>{cars.map(logTab)}</div>)
 const logFull = (owner) => (<div>{logTabList(owner.cars)}</div>)
 
@@ -101,7 +77,6 @@ const carCard = (car) => (
     </CardActions>
   </Card>
 )
-
 const listCards = (cars) => (<div className='car-cards'>{cars.map(carCard)}</div>)
 const ownerCars = (owner) => (
   <div className='owner-cars'>
@@ -109,13 +84,6 @@ const ownerCars = (owner) => (
     {listCards(owner.cars)}
   </div>
 )
-
-
-
-
-
-
-
 
 //--------Test Data Structures------------
 
@@ -202,7 +170,8 @@ class App extends React.Component {
     currentOwner: 1,
     owners: testOwner,
     addCar: false,
-    addHistory: false
+    addHistory: false,
+    showOwners: false
   }
 
   /* Ajax Request 
@@ -246,6 +215,12 @@ class App extends React.Component {
     const addHistory = !this.state.addHistory
     this.setState({ addHistory })
   }
+
+  //--------- Toggle Owner -------------
+  toggleOwner = () => {
+    const showOwners = !this.state.showOwners
+    this.setState({ showOwners })
+}
 
   //----------- Getting current entity ------------
   getCurrentOwner = () =>
@@ -307,7 +282,7 @@ class App extends React.Component {
       <Layout>
         <Header title="MotorBoard" className='header-color' scroll>
           <Navigation>
-            <a href="#" style={{ marginTop: '14px' }}><i className="fa fa-cog fa-2x" aria-hidden="true"></i></a>
+            <a onClick={this.toggleOwner} style={{ marginTop: '14px' }}><i className="fa fa-cog fa-2x" aria-hidden="true"></i></a>
             <a href="#" style={{ marginTop: '14px' }}><i className="fa fa-home fa-2x" aria-hidden="true"></i></a>
           </Navigation>
         </Header>
@@ -315,6 +290,7 @@ class App extends React.Component {
           onChange={(tabId) => this.setState({ activeTab: tabId })} ripple>
           <Tab>Log</Tab>
           <Tab>Dashboard</Tab>
+          {this.state.showOwners ? <Tab>Owner</Tab> : <Tab disabled>Owner</Tab>  }
         </Tabs>
         <Content>
           <div className='tab-content'>
