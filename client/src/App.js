@@ -42,7 +42,7 @@ const logTab = (car) => (
   <div className='log-tab'>
     <span>
       <h3>{car.nickname}</h3>
-      <img src={car.image_url} style={{ width: '500px' }} alt={`${car.nickname}`}/>
+      <img src={car.image_url} style={{ width: '500px' }} alt={`${car.nickname}`} />
     </span>
     <section>
       <h4>{car.year}  {car.make}  {car.model}</h4>
@@ -164,7 +164,6 @@ const serviceObject = (cars, service_history) => (
 
 
 // Fetch to GET
-
 const getOwnersFromServer = () => (
   fetch('/api/owner/')
     .then(res => res.json())
@@ -184,9 +183,9 @@ const getServiceHistoryFromServer = () => (
 const getAllFromServer = () => (
   getOwnersFromServer().then(owners =>
     getCarsFromServer().then(cars =>
-      getServiceHistoryFromServer().then( service =>
+      getServiceHistoryFromServer().then(service =>
         objectFromListById(owners, cars, serviceObject(cars, service))
-        )))
+      )))
 )
 
 class App extends React.Component {
@@ -208,7 +207,10 @@ class App extends React.Component {
       })
 
   }
-  
+
+  getNextOwnerId = () => (
+    Math.max(...this.getAllOwners().map(owner => owner.id)) + 1
+  )
 
   //---------Adding From Form ----------
   addNewCarForOwner = (newCar) => {
@@ -233,7 +235,7 @@ class App extends React.Component {
 
   addOwner = (newOwner) => {
     newOwner.cars = []
-    newOwner.id = 9
+    newOwner.id = this.getNextOwnerId()
 
     let owners = { ...this.state.owners }
 
@@ -275,14 +277,17 @@ class App extends React.Component {
     this.setState({ activeTab: 0 })
   }
   //----------- Getting current entity ------------
-  getCurrentOwner = () => 
+  getCurrentOwner = () => (
     this.state.owners[this.state.currentOwner]
+  )
 
-  getCurrentCar = () =>
+  getCurrentCar = () => (
     this.state.owners[this.state.currentOwner].cars
+  )
 
-  getAllOwners = () =>
+  getAllOwners = () => (
     Object.values(this.state.owners)
+  )
 
   setCurrentUser = (currentOwner) => {
     this.setState({ currentOwner })
@@ -337,12 +342,12 @@ class App extends React.Component {
           <header>
             <h1>Owner</h1>
             <Button onClick={this.toggleSwap} className='car-button' raised colored>
-              { this.state.swap ? 'Existing Owner' : 'New Owner'}
+              {this.state.swap ? 'Existing Owner' : 'New Owner'}
             </Button>
           </header>
           {
             this.state.swap ? <OwnerForm addNewOwner={this.addOwner} /> :
-            ownerList(this.getAllOwners(), this.state.currentOwner, this.setCurrentUser)
+              ownerList(this.getAllOwners(), this.state.currentOwner, this.setCurrentUser)
           }
         </div>
       )
