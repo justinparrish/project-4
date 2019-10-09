@@ -163,7 +163,7 @@ const serviceObject = (cars, service_history) => (
 )
 
 
-// Fetch to GET
+//----------- Fetch to GET -------------------
 const getOwnersFromServer = () => (
   fetch('/api/owner/')
     .then(res => res.json())
@@ -188,6 +188,16 @@ const getAllFromServer = () => (
       )))
 )
 
+const sendOwnerToServer = (ownerInfo) => (
+  fetch('/api/owner/', 
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(ownerInfo)
+    }).then(res => res.json())
+)
+
+
 class App extends React.Component {
   state = {
     activeTab: 2,
@@ -199,20 +209,19 @@ class App extends React.Component {
     swap: true
   }
 
-  //Ajax Request 
+  //----------- Ajax Request ------------
   componentDidMount = () => {
     getAllFromServer()
       .then(owners => {
         this.setState({ owners })
       })
-
   }
 
+  //---------Adding From Form ----------
   getNextOwnerId = () => (
     Math.max(...this.getAllOwners().map(owner => owner.id)) + 1
   )
 
-  //---------Adding From Form ----------
   addNewCarForOwner = (newCar) => {
     newCar.service_history = []
 
@@ -234,15 +243,18 @@ class App extends React.Component {
   }
 
   addOwner = (newOwner) => {
-    newOwner.cars = []
-    newOwner.id = this.getNextOwnerId()
+    sendOwnerToServer(newOwner).then(newOwner => {
 
-    let owners = { ...this.state.owners }
-
-    owners[newOwner.id] = newOwner
-
-    this.setState({ owners, currentOwner: newOwner.id })
-    console.log(this.state.owners)
+      newOwner.cars = []
+      newOwner.id = this.getNextOwnerId()
+  
+      let owners = { ...this.state.owners }
+  
+      owners[newOwner.id] = newOwner
+  
+      this.setState({ owners, currentOwner: newOwner.id })
+      console.log(this.state.owners)
+    })
   }
 
   //------- Toggle Forms ----------
