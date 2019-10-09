@@ -23,7 +23,7 @@ export default class ServiceForm extends Component {
     handleSubmit = (evnt) => {
         evnt.preventDefault()
 
-        this.props.addNewServiceHistory( this.state )
+        this.props.addServiceToCar( this.state )
     }
 
     render() {

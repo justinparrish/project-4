@@ -48,7 +48,7 @@ const serviceList = (services) => (
     {services.map(servicePreview)}
   </List>
 )
-const ownerCarService = (cars) => (serviceList(cars.service_history))
+const ownerCarService = (cars) => (serviceList(cars.services))
 
 //----------- Log Tab Layout --------------
 const logTab = (car) => (
@@ -106,7 +106,7 @@ const testOwner =
           , make: 'chevy'
           , model: 'monte carlo'
           , owner: 1
-          , service_history:
+          , services:
             [
               {
                 id: 1,
@@ -139,7 +139,7 @@ const testOwner =
           , make: 'isuzu'
           , model: 'trooper'
           , owner: 2
-          , service_history:
+          , services:
             [
               {
                 id: 2,
@@ -169,9 +169,9 @@ const objectFromListById = (owners, cars) => (
   }, {})
 )
 
-const serviceObject = (cars, service_history) => (
+const serviceObject = (cars, services) => (
   cars.reduce((obj, car) => {
-    car.service_history = service_history.filter(service => service.car === car.id)
+    car.services = services.filter(services => services.car === car.id)
 
     obj[car.id] = car
 
@@ -200,8 +200,8 @@ const getServiceHistoryFromServer = () => (
 const getAllFromServer = () => (
   getOwnersFromServer().then(owners =>
     getCarsFromServer().then(cars =>
-      getServiceHistoryFromServer().then(service =>
-        objectFromListById(owners, cars, serviceObject(cars, service))
+      getServiceHistoryFromServer().then(services =>
+        objectFromListById(owners, cars, serviceObject(cars, services))
       )))
 )
 
@@ -261,7 +261,7 @@ class App extends React.Component {
   addNewCarForOwner = (newCar) => {
     sendOwnerCarToServer({...newCar, owner:this.state.currentOwner}).then(newCar => {
 
-      newCar.service_history = []
+      newCar.services = []
   
       let owners = { ...this.state.owners }
   
@@ -276,9 +276,9 @@ class App extends React.Component {
   addServiceToCar = (newInfo) => {
     sendCarServiceToServer({...newInfo, car:this.state.currentCar}).then(newInfo =>{
       
-      let owners = { ...this.state.owners }
-  
-      owners[this.state.currentOwner].cars[this.state.currentCar].service_history.push(newInfo)
+      let owners = { ...this.state.owners[this.getCurrentOwner] }
+
+      owners.cars[this.state.currentCar].services.push(newInfo)
   
       this.setState({ owners })
     })
@@ -364,7 +364,7 @@ class App extends React.Component {
               <Icon name="+" />
             </FABButton>
             <aside>
-              {this.state.addHistory ? <ServiceForm addNewServiceHistory={this.addServiceToCar} /> : null}
+              {this.state.addHistory ? <ServiceForm addServiceToCar={this.addServiceToCar} /> : null}
               {ownerCarList(this.getCurrentCar(), this.state.currentCar, this.setCurrentCar)}
             </aside>
           </header>
