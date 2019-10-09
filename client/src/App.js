@@ -152,6 +152,16 @@ const objectFromListById = (owners, cars) => (
   }, {})
 )
 
+const serviceObject = (cars, service_history) => (
+  cars.reduce((obj, car) => {
+    car.service_history = service_history.filter(service => service.car === car.id)
+
+    obj[car.id] = car
+
+    return obj
+  }, {})
+)
+
 
 // Fetch to GET
 
@@ -174,8 +184,9 @@ const getServiceHistoryFromServer = () => (
 const getAllFromServer = () => (
   getOwnersFromServer().then(owners =>
     getCarsFromServer().then(cars =>
-        objectFromListById(owners, cars)
-        ))
+      getServiceHistoryFromServer().then( service =>
+        objectFromListById(owners, cars, serviceObject(cars, service))
+        )))
 )
 
 class App extends React.Component {
@@ -246,6 +257,7 @@ class App extends React.Component {
 
   toggleSwap = () => {
     const swap = !this.state.swap
+    console.log(this.state.owners)
     this.setState({ swap })
   }
 
