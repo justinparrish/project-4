@@ -21,6 +21,17 @@ const ownerList = (owners, currentOwner, onChange) => (
   </select>
 )
 
+//----------- Selecting Current Car --------------
+const ownerCarsDD = (car) => (
+  <option value={car.id}>{car.nickname}</option>
+)
+
+const ownerCarList = (cars) => (
+  <select>
+    {cars.map(ownerCarsDD)}
+  </select>
+)
+
 //---------Service History Info---------
 const servicePreview = (service) => (
   <ListItem threeLine>
@@ -224,6 +235,7 @@ class App extends React.Component {
   state = {
     activeTab: 2,
     currentOwner: 5,
+    currentCar: 1,
     owners: testOwner,
     addCar: false,
     addHistory: false,
@@ -260,14 +272,12 @@ class App extends React.Component {
   }
 
   addServiceToCar = (newInfo) => {
-    sendCarServiceToServer({...newInfo}).then(newInfo => {
       let owners = { ...this.state.owners }
   
       owners[this.state.currentOwner].cars[0].service_history.push(newInfo)
   
       this.setState({ owners })
 
-    })
   }
 
   addOwner = (newOwner) => {
@@ -345,6 +355,7 @@ class App extends React.Component {
               <Icon name="+" />
             </FABButton>
             <aside>
+              {ownerCarList(this.getCurrentCar())}
               {this.state.addHistory ? <ServiceForm addNewServiceHistory={this.addServiceToCar} /> : null}
             </aside>
           </header>
