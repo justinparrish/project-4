@@ -234,8 +234,8 @@ const sendCarServiceToServer = (serviceInfo) => (
 class App extends React.Component {
   state = {
     activeTab: 2,
-    currentOwner: 1,
-    currentCar: 1,
+    currentOwner: 2,
+    currentCar: 2,
     owners: testOwner,
     addCar: false,
     addHistory: false,
@@ -287,7 +287,6 @@ class App extends React.Component {
     sendOwnerToServer(newOwner).then(newOwner => {
 
       newOwner.cars = []
-      newOwner.id = this.getNextOwnerId()
   
       let owners = { ...this.state.owners }
   
