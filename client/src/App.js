@@ -234,7 +234,7 @@ const sendCarServiceToServer = (serviceInfo) => (
 class App extends React.Component {
   state = {
     activeTab: 2,
-    currentOwner: 5,
+    currentOwner: 1,
     currentCar: 1,
     owners: testOwner,
     addCar: false,
@@ -272,11 +272,14 @@ class App extends React.Component {
   }
 
   addServiceToCar = (newInfo) => {
+    sendCarServiceToServer({...newInfo, car:this.state.currentCar}).then(newInfo =>{
+      
       let owners = { ...this.state.owners }
   
       owners[this.state.currentOwner].cars[this.state.currentCar].service_history.push(newInfo)
   
       this.setState({ owners })
+    })
 
   }
 
@@ -290,7 +293,7 @@ class App extends React.Component {
   
       owners[newOwner.id] = newOwner
   
-      this.setState({ owners })
+      this.setState({ owners, currentOwner: newOwner.id })
       console.log(this.state.owners)
     })
   }
@@ -304,12 +307,13 @@ class App extends React.Component {
 
   toggleAddHistory = () => {
     const addHistory = !this.state.addHistory
+    console.log(this.state)
     this.setState({ addHistory })
   }
 
   toggleSwap = () => {
     const swap = !this.state.swap
-    console.log(this.state.owners)
+    console.log(this.state)
     this.setState({ swap })
   }
 
@@ -343,6 +347,10 @@ class App extends React.Component {
     this.setState({ currentOwner })
   }
 
+  setCurrentCar = (currentCar) => {
+    this.setState({ currentCar })
+  }
+
   //-------------- Tabs ------------------
   toggleTab = () => {
     // LOG TAB (list service history for one car)
@@ -356,7 +364,7 @@ class App extends React.Component {
             </FABButton>
             <aside>
               {this.state.addHistory ? <ServiceForm addNewServiceHistory={this.addServiceToCar} /> : null}
-              {ownerCarList(this.getCurrentCar(), this.state.currentCar)}
+              {ownerCarList(this.getCurrentCar(), this.state.currentCar, this.setCurrentCar)}
             </aside>
           </header>
           <section>
