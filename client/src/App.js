@@ -26,8 +26,8 @@ const ownerCarsDD = (car) => (
   <option value={car.id}>{car.nickname}</option>
 )
 
-const ownerCarList = (cars) => (
-  <select>
+const ownerCarList = (cars, currentCar, onChange) => (
+  <select value={currentCar} onChange={(evnt) => onChange(evnt.target.value)}>
     {cars.map(ownerCarsDD)}
   </select>
 )
@@ -274,7 +274,7 @@ class App extends React.Component {
   addServiceToCar = (newInfo) => {
       let owners = { ...this.state.owners }
   
-      owners[this.state.currentOwner].cars[0].service_history.push(newInfo)
+      owners[this.state.currentOwner].cars[this.state.currentCar].service_history.push(newInfo)
   
       this.setState({ owners })
 
@@ -339,7 +339,7 @@ class App extends React.Component {
     Object.values(this.state.owners)
   )
 
-  setCurrentUser = (currentOwner) => {
+  setCurrentOwner = (currentOwner) => {
     this.setState({ currentOwner })
   }
 
@@ -355,8 +355,8 @@ class App extends React.Component {
               <Icon name="+" />
             </FABButton>
             <aside>
-              {ownerCarList(this.getCurrentCar())}
               {this.state.addHistory ? <ServiceForm addNewServiceHistory={this.addServiceToCar} /> : null}
+              {ownerCarList(this.getCurrentCar(), this.state.currentCar)}
             </aside>
           </header>
           <section>
@@ -398,7 +398,7 @@ class App extends React.Component {
           </header>
           {
             this.state.swap ? <OwnerForm addNewOwner={this.addOwner} /> :
-              ownerList(this.getAllOwners(), this.state.currentOwner, this.setCurrentUser)
+              ownerList(this.getAllOwners(), this.state.currentOwner, this.setCurrentOwner)
           }
         </div>
       )
