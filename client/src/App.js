@@ -17,7 +17,7 @@ const ownerUsernames = (owner) => (
 
 const ownerList = (owners, currentOwner, onChange) => (
   <select value={currentOwner} onChange={(evnt) => onChange(evnt.target.value)}>
-    <option></option>
+    <option value="100" disabled>Select Owner</option>
     {owners.map(ownerUsernames)}
   </select>
 )
@@ -29,7 +29,7 @@ const ownerCarsDD = (car) => (
 
 const ownerCarList = (cars, currentCar, onChange) => (
   <select value={currentCar} onChange={(evnt) => onChange(evnt.target.value)}>
-    <option></option>
+    <option value="100" disabled>Select Car</option>
     {cars.map(ownerCarsDD)}
   </select>
 )
@@ -236,8 +236,8 @@ const sendCarServiceToServer = (serviceInfo) => (
 class App extends React.Component {
   state = {
     activeTab: 2,
-    currentOwner: '',
-    currentCar: '',
+    currentOwner: '100',
+    currentCar: '100',
     owners: testOwner,
     addCar: false,
     addHistory: false,
