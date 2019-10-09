@@ -91,8 +91,8 @@ const testOwner =
           , nickname: 'bertha'
           , year: 2003
           , make: 'chevy'
-          , model: 'monte carlo',
-            owner: 1
+          , model: 'monte carlo'
+          , owner: 1
           , service_history:
             [
               {
@@ -103,7 +103,8 @@ const testOwner =
                 mileage: 250000,
                 price: 59.99,
                 date: '2019-10-10',
-                note: 'my name is lynd'
+                note: 'my name is lynd',
+                car: 1
               }
             ]
         }
@@ -123,8 +124,8 @@ const testOwner =
           , nickname: 'shirley'
           , year: 1999
           , make: 'isuzu'
-          , model: 'trooper',
-            owner: 2
+          , model: 'trooper'
+          , owner: 2
           , service_history:
             [
               {
@@ -135,7 +136,8 @@ const testOwner =
                 mileage: 250000,
                 price: 59.90,
                 date: '2019-10-10',
-                note: 'my name is lynd'
+                note: 'my name is lynd',
+                car: 2
               }
             ]
         }
@@ -208,11 +210,20 @@ const sendOwnerCarToServer = (carInfo) => (
     }).then(res => res.json())
 )
 
+const sendCarServiceToServer = (serviceInfo) => (
+  fetch('/api/service/', 
+    {
+      method: "POST",
+      headers: { "Content-Type" : "application/json"},
+      body: JSON.stringify(serviceInfo)
+    }).then(res => res.json())
+)
+
 
 class App extends React.Component {
   state = {
     activeTab: 2,
-    currentOwner: 1,
+    currentOwner: 5,
     owners: testOwner,
     addCar: false,
     addHistory: false,
@@ -249,11 +260,14 @@ class App extends React.Component {
   }
 
   addServiceToCar = (newInfo) => {
-    let owners = { ...this.state.owners }
+    sendCarServiceToServer({...newInfo}).then(newInfo => {
+      let owners = { ...this.state.owners }
+  
+      owners[this.state.currentOwner].cars[0].service_history.push(newInfo)
+  
+      this.setState({ owners })
 
-    owners[this.state.currentOwner].cars[0].service_history.push(newInfo)
-
-    this.setState({ owners })
+    })
   }
 
   addOwner = (newOwner) => {
@@ -266,7 +280,7 @@ class App extends React.Component {
   
       owners[newOwner.id] = newOwner
   
-      this.setState({ owners, currentOwner: newOwner.id })
+      this.setState({ owners })
       console.log(this.state.owners)
     })
   }
