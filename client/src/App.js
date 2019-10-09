@@ -142,11 +142,12 @@ const testOwner =
 }
 
 
-const objectFromListById = (owners, cars, service_history) => (
+const objectFromListById = (owners, cars) => (
   owners.reduce((obj, owner) => {
     owner.cars = cars.filter(car => car.owner === owner.id)
-    cars.service_history = service_history.filter((car,service) => service.car === car.id)
+
     obj[owner.id] = owner
+
     return obj
   }, {})
 )
@@ -173,9 +174,8 @@ const getServiceHistoryFromServer = () => (
 const getAllFromServer = () => (
   getOwnersFromServer().then(owners =>
     getCarsFromServer().then(cars =>
-      getServiceHistoryFromServer().then(services=>
-        objectFromListById(owners, cars, services)
-        )))
+        objectFromListById(owners, cars)
+        ))
 )
 
 class App extends React.Component {
