@@ -91,7 +91,8 @@ const testOwner =
           , nickname: 'bertha'
           , year: 2003
           , make: 'chevy'
-          , model: 'monte carlo'
+          , model: 'monte carlo',
+            owner: 1
           , service_history:
             [
               {
@@ -122,7 +123,8 @@ const testOwner =
           , nickname: 'shirley'
           , year: 1999
           , make: 'isuzu'
-          , model: 'trooper'
+          , model: 'trooper',
+            owner: 2
           , service_history:
             [
               {
@@ -192,8 +194,17 @@ const sendOwnerToServer = (ownerInfo) => (
   fetch('/api/owner/', 
     {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type" : "application/json" },
       body: JSON.stringify(ownerInfo)
+    }).then(res => res.json())
+)
+
+const sendOwnerCarToServer = (carInfo) => (
+  fetch('/api/car/', 
+    {
+      method: "POST",
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify(carInfo)
     }).then(res => res.json())
 )
 
@@ -223,15 +234,18 @@ class App extends React.Component {
   )
 
   addNewCarForOwner = (newCar) => {
-    newCar.service_history = []
+    sendOwnerCarToServer({...newCar, owner:this.state.currentOwner}).then(newCar => {
 
-    let owners = { ...this.state.owners }
-
-    owners[this.state.currentOwner].cars.push(newCar)
-
-
-    this.setState({ owners })
-    console.log(this.state.owners)
+      newCar.service_history = []
+  
+      let owners = { ...this.state.owners }
+  
+      owners[this.state.currentOwner].cars.push(newCar)
+  
+  
+      this.setState({ owners })
+      console.log(this.state.owners)
+    })
   }
 
   addServiceToCar = (newInfo) => {

@@ -8,8 +8,8 @@ export default class CarForm extends Component {
     nickname: '',
     year: '',
     make: '',
-    model: '',
-    
+    model: ''
+
   }
 
   handleInput = (evnt) => {
