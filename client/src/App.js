@@ -44,7 +44,7 @@ const servicePreview = (service) => (
   </ListItem>
 )
 const serviceList = (services) => (
-  <List style={{ width: 500 }} className='service-list-ant'>
+  <List style={{ width: 500, height: 260 }} className='service-list-ant scroll-list'>
     {services.map(servicePreview)}
   </List>
 )

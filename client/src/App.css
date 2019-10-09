@@ -45,3 +45,8 @@ header > .service-button {
 .log-tab > span {
   font-size: 2em;
 }
+
+.scroll-list {
+  overflow: hidden;
+  overflow-y: scroll;
+}
