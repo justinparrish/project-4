@@ -16,8 +16,8 @@ const ownerUsernames = (owner) => (
 )
 
 const ownerList = (owners, currentOwner, onChange) => (
-  <select value={currentOwner} onChange={(evnt) => onChange(evnt.target.value)}>
-    <option value="100" disabled>Select Owner</option>
+  <select value={currentOwner} onChange={(evnt) => onChange(evnt.target.value)} className='drop-down-menu owner'>
+    <option value={undefined} >Select Owner</option>
     {owners.map(ownerUsernames)}
   </select>
 )
@@ -28,8 +28,8 @@ const ownerCarsDD = (car) => (
 )
 
 const ownerCarList = (cars, currentCar, onChange) => (
-  <select value={currentCar} onChange={(evnt) => onChange(evnt.target.value)}>
-    <option value="100" disabled>Select Car</option>
+  <select value={currentCar} onChange={(evnt) => onChange(evnt.target.value)} className='drop-down-menu car'>
+    <option value={undefined} >Select Car</option>
     {cars.map(ownerCarsDD)}
   </select>
 )
@@ -170,12 +170,12 @@ const objectFromListById = (owners, cars) => (
 )
 
 const serviceObject = (cars, services) => (
-  cars.reduce((obj, car) => {
+  cars.reduce((owner, car) => {
     car.services = services.filter(services => services.car === car.id)
 
-    obj[car.id] = car
+    owner[car.id] = car
 
-    return obj
+    return owner
   }, {})
 )
 
@@ -206,28 +206,28 @@ const getAllFromServer = () => (
 )
 
 const sendOwnerToServer = (ownerInfo) => (
-  fetch('/api/owner/', 
+  fetch('/api/owner/',
     {
       method: "POST",
-      headers: { "Content-Type" : "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(ownerInfo)
     }).then(res => res.json())
 )
 
 const sendOwnerCarToServer = (carInfo) => (
-  fetch('/api/car/', 
+  fetch('/api/car/',
     {
       method: "POST",
-      headers: { "Content-Type" : "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(carInfo)
     }).then(res => res.json())
 )
 
 const sendCarServiceToServer = (serviceInfo) => (
-  fetch('/api/service/', 
+  fetch('/api/service/',
     {
       method: "POST",
-      headers: { "Content-Type" : "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(serviceInfo)
     }).then(res => res.json())
 )
@@ -236,8 +236,8 @@ const sendCarServiceToServer = (serviceInfo) => (
 class App extends React.Component {
   state = {
     activeTab: 2,
-    currentOwner: '100',
-    currentCar: '100',
+    currentOwner: undefined,
+    currentCar: undefined,
     owners: testOwner,
     addCar: false,
     addHistory: false,
@@ -259,27 +259,27 @@ class App extends React.Component {
   )
 
   addNewCarForOwner = (newCar) => {
-    sendOwnerCarToServer({...newCar, owner:this.state.currentOwner}).then(newCar => {
+    sendOwnerCarToServer({ ...newCar, owner: this.state.currentOwner }).then(newCar => {
 
       newCar.services = []
-  
+
       let owners = { ...this.state.owners }
-  
+
       owners[this.state.currentOwner].cars.push(newCar)
-  
-  
+
+
       this.setState({ owners })
       console.log(this.state.owners)
     })
   }
 
   addServiceToCar = (newInfo) => {
-    sendCarServiceToServer({...newInfo, car:this.state.currentCar}).then(newInfo =>{
-      
-      let owners = { ...this.state.owners[this.getCurrentOwner] }
+    sendCarServiceToServer({ ...newInfo, car: this.state.currentCar }).then(newInfo => {
 
-      owners.cars[this.state.currentCar].services.push(newInfo)
-  
+      let owners = { ...this.state.owners }
+
+      owners[this.state.currentOwner].cars[this.state.currentCar].services.push(newInfo)
+
       this.setState({ owners })
     })
 
@@ -289,11 +289,11 @@ class App extends React.Component {
     sendOwnerToServer(newOwner).then(newOwner => {
 
       newOwner.cars = []
-  
+
       let owners = { ...this.state.owners }
-  
+
       owners[newOwner.id] = newOwner
-  
+
       this.setState({ owners, currentOwner: newOwner.id })
       console.log(this.state.owners)
     })
@@ -351,6 +351,8 @@ class App extends React.Component {
   setCurrentCar = (currentCar) => {
     this.setState({ currentCar })
   }
+
+
 
   //-------------- Tabs ------------------
   toggleTab = () => {
@@ -427,8 +429,8 @@ class App extends React.Component {
         </Header>
         <Tabs activeTab={this.state.activeTab}
           onChange={(tabId) => this.setState({ activeTab: tabId })} ripple>
-          <Tab>Log</Tab>
-          <Tab>Dashboard</Tab>
+          {this.state.currentOwner === undefined || null ? <Tab disabled>Log</Tab> : <Tab>Log</Tab>}
+          {this.state.currentOwner === undefined || null ? <Tab disabled>Dashboard</Tab> : <Tab>Dashboard</Tab>}
           {this.state.showOwners ? <Tab>Owner</Tab> : <Tab disabled>Owner</Tab>}
         </Tabs>
         <Content>
