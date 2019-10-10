@@ -199,8 +199,8 @@ const getServiceHistoryFromServer = () => (
 const getAllFromServer = () => (
   getOwnersFromServer().then(owners =>
     getCarsFromServer().then(cars =>
-      getServiceHistoryFromServer().then(services =>
-        objectFromListById(owners, cars, serviceObject(cars, services))
+      getServiceHistoryFromServer().then(service =>
+        objectFromListById(owners, cars, serviceObject(cars, service))
       )))
 )
 
@@ -276,10 +276,11 @@ class App extends React.Component {
     sendCarServiceToServer({ ...newInfo, car: this.state.currentCar }).then(newInfo => {
 
       let owners = { ...this.state.owners }
-
-      owners[this.state.currentOwner].cars[this.state.currentCar].services.push(newInfo)
-
+      console.log('new owners: ',this.state.owners[this.state.currentOwner].cars[this.getCurrentCar])
+      owners[this.state.currentOwner]['cars'][this.state.currentCar]['services'].push(newInfo)
+      
       this.setState({ owners })
+      
     })
 
   }
