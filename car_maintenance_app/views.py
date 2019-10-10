@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from .serializers import CarSerializer, OwnerSerializer, ServiceSerializer
-from .models import Car, Owner, ServiceHistory
+from .models import Car, Owner, Service
 
 class OwnerViewSet(viewsets.ModelViewSet):
     queryset = Owner.objects.all()
@@ -12,5 +12,5 @@ class CarViewSet(viewsets.ModelViewSet):
     serializer_class = CarSerializer
     
 class ServiceViewSet(viewsets.ModelViewSet):
-    queryset = ServiceHistory.objects.all()
-    serializer_class = ServiceHistorySerializer
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
