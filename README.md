@@ -6,6 +6,9 @@ MotorBoard is an online log application that is used to help all motor vehicle o
 ## Technologies Used
 * Django
 * React
+* SQLite
+* Python
+* Javascript
 
 ## Links
 [Heroku](https://evening-anchorage-06845.herokuapp.com/ "Heroku")
@@ -13,8 +16,9 @@ MotorBoard is an online log application that is used to help all motor vehicle o
 [Project Board](https://github.com/justinparrish/project-four/projects/2 "Project Board")
 
 ## Wireframes
-![alt text](url "image")
-![alt text](url "image")
+![alt text](client/public/images/dashboard-tab.png "dashboard tab")
+![alt text](client/public/images/log-tab.png "log tab")
+![alt text](client/public/images/owner-tab.png "owner selcetion tab")
 
 
 ## Entity Relationship Diagram (ERD)
