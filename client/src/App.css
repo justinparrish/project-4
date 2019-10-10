@@ -63,3 +63,11 @@ header > .service-button {
   margin: 17px
 }
 
+.card-car-info {
+  font-size: 25px;
+  color: #06065f;
+  margin-left: 10px;
+  padding-bottom: 5px;
+  
+}
+

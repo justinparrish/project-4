@@ -69,13 +69,12 @@ const logFull = (owner) => (<div>{logTabList(owner.cars)}</div>)
 
 //------------Car card (Dashboard) ----------------
 const carCard = (car) => (
-
   <Card shadow={6} style={{ width: '512px', margin: 'auto', marginBottom: '50px' }}>
     <CardTitle style={{ color: '#fff', height: '200px', background: `url(${car.image_url}) center / cover` }}>
       {car.nickname}
     </CardTitle>
     <CardActions border>
-      <Button colored ripple>View Log</Button>
+    <span className='card-car-info'>{car.year}  {car.make}  {car.model}</span>
     </CardActions>
   </Card>
 )
