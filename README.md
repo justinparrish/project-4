@@ -22,4 +22,4 @@ MotorBoard is an online log application that is used to help all motor vehicle o
 
 
 ## Entity Relationship Diagram (ERD)
-![alt text](url "image")
+![alt text](client/public/images/erd-image.png "erd")
