@@ -293,7 +293,7 @@ class App extends React.Component {
 
       owners[newOwner.id] = newOwner
 
-      this.setState({ owners, currentOwner: newOwner.id })
+      this.setState({ owners, currentOwner: newOwner.id, swap: false })
       console.log(this.state.owners)
     })
   }
@@ -366,7 +366,7 @@ class App extends React.Component {
             </FABButton>
             <aside>
               {this.state.addHistory ? <ServiceForm addServiceToCar={this.addServiceToCar} /> : null}
-              {ownerCarList(this.getCurrentCar(), this.state.currentCar, this.setCurrentCar)}
+              {this.state.addHistory ? ownerCarList(this.getCurrentCar(), this.state.currentCar, this.setCurrentCar) : null}
             </aside>
           </header>
           <section>

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Car, Owner, ServiceHistory
+from .models import Car, Owner, Service
 
 class OwnerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,7 +11,7 @@ class CarSerializer(serializers.ModelSerializer):
         model = Car
         fields = ['id', 'image_url', 'nickname', 'year', 'make', 'model', 'owner']
         
-class ServiceHistorySerializer(serializers.ModelSerializer):
+class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ServiceHistory
+        model = Service
         fields = ['id', 'dealership', 'location', 'service', 'mileage', 'price', 'date', 'note', 'car']

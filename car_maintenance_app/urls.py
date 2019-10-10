@@ -6,7 +6,7 @@ router = routers.DefaultRouter()
 
 router.register(r'car', views.CarViewSet)
 router.register(r'owner', views.OwnerViewSet)
-router.register(r'service',views.ServiceHistoryViewSet)
+router.register(r'service',views.ServiceViewSet)
 
 
 
