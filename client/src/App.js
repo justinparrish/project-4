@@ -4,7 +4,7 @@ import './App.css'
 import {
   Button, Card, CardActions, CardTitle, Content, FABButton, Footer, FooterLinkList,
   FooterSection, Header, Icon, List, ListItem, ListItemContent, Navigation, Layout, Tabs, Tab
-} from 'react-mdl'
+      } from 'react-mdl'
 
 import CarForm from './components/CarForm'
 import ServiceForm from './components/ServiceForm'
@@ -19,6 +19,18 @@ const ownerList = (owners, currentOwner, onChange) => (
   <select value={currentOwner} onChange={(evnt) => onChange(evnt.target.value)} className='drop-down-menu owner'>
     <option value={undefined} >Select Owner</option>
     {owners.map(ownerUsernames)}
+  </select>
+)
+
+//----------- Selecting Current Car --------------
+const carIds = (car) => (<option value={car.id}>{car.nickname}</option>)
+
+const mappingOwnerCar = (cars) => (cars.map(carIds))
+
+const ownerCarList = (owner, currentCar, onChange) => (
+  <select value={currentCar} onChange={(evnt) => onChange(evnt.target.value)} className='drop-down-menu car'>
+    <option value={undefined} >Select Car</option>
+    {mappingOwnerCar(owner)}
   </select>
 )
 
@@ -40,28 +52,6 @@ const ownerCars = (owner) => (
     {listCards(owner.cars)}
   </div>
 )
-//----------- Selecting Current Car --------------
-
-const carId = (car) => (`${car.id}`)
-const carNickname = (car) => (`${car.nickname}`)
-
-const ownerCarsDD = (cars) => (
-  <option value={cars.map(carId)}>{cars.map(carNickname)}</option>
-)
-//--------
-const carIds = (car) => (<option value={car.id}>{car.nickname}</option>)
-
-const mappingOwnerCar = (cars) => (cars.map(carIds))
-//-----
-const mapOwnerCar = (cars) => {cars.map(ownerCarsDD)}
-
-const ownerCarList = (owner, currentCar, onChange) => (
-  <select value={currentCar} onChange={(evnt) => onChange(evnt.target.value)} className='drop-down-menu car'>
-    <option value={undefined} >Select Car</option>
-    {mappingOwnerCar(owner)}
-  </select>
-)
-
 //---------Service History Info---------
 const servicePreview = (service) => (
   <ListItem threeLine>
@@ -132,7 +122,6 @@ const testOwner =
         }
       ]
   },
-  //-----------------------------------------------------------
   2:
   {
     id: 2,
@@ -189,7 +178,7 @@ const serviceObject = (cars, services) => (
 )
 
 
-//----------- Fetch to GET -------------------
+//----------- Fetch to GET data from Django Server-------------------
 const getOwnersFromServer = () => (
   fetch('/api/owner/')
     .then(res => res.json())
@@ -204,7 +193,6 @@ const getServiceHistoryFromServer = () => (
   fetch('/api/service/')
     .then(res => res.json())
 )
-
 
 const getAllFromServer = () => (
   getOwnersFromServer().then(owners =>
@@ -263,10 +251,6 @@ class App extends React.Component {
   }
 
   //---------Adding From Form ----------
-  getNextOwnerId = () => (
-    Math.max(...this.getAllOwners().map(owner => owner.id)) + 1
-  )
-
   addNewCarForOwner = (newCar) => {
     sendOwnerCarToServer({ ...newCar, owner: this.state.currentOwner }).then(newCar => {
 
@@ -274,12 +258,9 @@ class App extends React.Component {
 
       let owners = { ...this.state.owners }
 
-      console.log(owners[this.state.currentOwner].cars[this.state.currentCar])
       owners[this.state.currentOwner].cars.push(newCar)
 
-
-      this.setState({ owners })
-      console.log(this.state.owners)
+      this.setState({ owners, addCar: false })
     })
   }
 
@@ -294,8 +275,7 @@ class App extends React.Component {
 
       owners[this.state.currentOwner]['cars'][carId]['services'].push(newInfo)
 
-      this.setState({ owners })
-      console.log(this.state.owners)
+      this.setState({ owners , addHistory: false })
     })
 
   }
@@ -316,30 +296,19 @@ class App extends React.Component {
   //------- Toggle Forms ----------
   toggleAddCar = () => {
     const addCar = !this.state.addCar
-    console.log('cars', Object.values(this.state.owners[this.state.currentOwner].cars))
+
     let owners = {...this.state.owners}
-    console.log('new service: ', owners[this.state.currentOwner]['cars'])
 
-
-    // carsArray.forEach(function(obj) {
-    //   for(let index in obj){
-    //     console.log(obj[index])
-    //   }
-    // })
-
-    console.log(this.state.owners)
     this.setState({ addCar })
   }
 
   toggleAddHistory = () => {
     const addHistory = !this.state.addHistory
-    console.log(this.state)
     this.setState({ addHistory })
   }
 
   toggleSwap = () => {
     const swap = !this.state.swap
-    console.log(this.state)
     this.setState({ swap })
   }
 
@@ -469,11 +438,8 @@ class App extends React.Component {
         </Content>
         <Footer size="mini">
           <FooterSection type="left" logo="MotorBoard">
-            <FooterLinkList>
-              <a href="#">Help</a>
-              <a href="#">Privacy & Terms</a>
-            </FooterLinkList>
           </FooterSection>
+          <FooterSection type="right" logo="Created By Justin Parrish" />
         </Footer>
       </Layout>
     </div>
