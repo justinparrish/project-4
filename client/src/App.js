@@ -22,15 +22,43 @@ const ownerList = (owners, currentOwner, onChange) => (
   </select>
 )
 
-//----------- Selecting Current Car --------------
-const ownerCarsDD = (car) => (
-  <option value={car.id}>{car.nickname}</option>
+//------------Car card (Dashboard) ----------------
+const carCard = (car) => (
+  <Card shadow={6} style={{ width: '512px', margin: 'auto', marginBottom: '50px' }}>
+    <CardTitle style={{ color: '#fff', height: '200px', background: `url(${car.image_url}) center / cover` }}>
+      {car.nickname}
+    </CardTitle>
+    <CardActions border>
+    <span className='card-car-info'>{car.year}  {car.make}  {car.model}</span>
+    </CardActions>
+  </Card>
 )
+const listCards = (cars) => (<div className='car-cards'>{cars.map(carCard)}</div>)
+const ownerCars = (owner) => (
+  <div className='owner-cars'>
+    <h6>Owner: {owner.username}</h6>
+    {listCards(owner.cars)}
+  </div>
+)
+//----------- Selecting Current Car --------------
 
-const ownerCarList = (cars, currentCar, onChange) => (
+const carId = (car) => (`${car.id}`)
+const carNickname = (car) => (`${car.nickname}`)
+
+const ownerCarsDD = (cars) => (
+  <option value={cars.map(carId)}>{cars.map(carNickname)}</option>
+)
+//--------
+const carIds = (car) => (<option value={car.id}>{car.nickname}</option>)
+
+const mappingOwnerCar = (cars) => (cars.map(carIds))
+//-----
+const mapOwnerCar = (cars) => {cars.map(ownerCarsDD)}
+
+const ownerCarList = (owner, currentCar, onChange) => (
   <select value={currentCar} onChange={(evnt) => onChange(evnt.target.value)} className='drop-down-menu car'>
     <option value={undefined} >Select Car</option>
-    {cars.map(ownerCarsDD)}
+    {mappingOwnerCar(owner)}
   </select>
 )
 
@@ -67,24 +95,6 @@ const logTab = (car) => (
 const logTabList = (cars) => (<div>{cars.map(logTab)}</div>)
 const logFull = (owner) => (<div>{logTabList(owner.cars)}</div>)
 
-//------------Car card (Dashboard) ----------------
-const carCard = (car) => (
-  <Card shadow={6} style={{ width: '512px', margin: 'auto', marginBottom: '50px' }}>
-    <CardTitle style={{ color: '#fff', height: '200px', background: `url(${car.image_url}) center / cover` }}>
-      {car.nickname}
-    </CardTitle>
-    <CardActions border>
-    <span className='card-car-info'>{car.year}  {car.make}  {car.model}</span>
-    </CardActions>
-  </Card>
-)
-const listCards = (cars) => (<div className='car-cards'>{cars.map(carCard)}</div>)
-const ownerCars = (owner) => (
-  <div className='owner-cars'>
-    <h6>Owner: {owner.username}</h6>
-    {listCards(owner.cars)}
-  </div>
-)
 
 //--------Test Data Structures------------
 
@@ -170,7 +180,7 @@ const objectFromListById = (owners, cars) => (
 
 const serviceObject = (cars, services) => (
   cars.reduce((owner, car) => {
-    car.services = services.filter(services => services.car === car.id)
+    car.services = services.filter(services => services.car === services.id)
 
     owner[car.id] = car
 
@@ -264,6 +274,7 @@ class App extends React.Component {
 
       let owners = { ...this.state.owners }
 
+      console.log(owners[this.state.currentOwner].cars[this.state.currentCar])
       owners[this.state.currentOwner].cars.push(newCar)
 
 
@@ -276,11 +287,15 @@ class App extends React.Component {
     sendCarServiceToServer({ ...newInfo, car: this.state.currentCar }).then(newInfo => {
 
       let owners = { ...this.state.owners }
-      console.log('new owners: ',this.state.owners[this.state.currentOwner].cars[this.getCurrentCar])
-      owners[this.state.currentOwner]['cars'][this.state.currentCar]['services'].push(newInfo)
-      
+
+      let carsArray = owners[this.state.currentOwner]['cars']
+
+      let carId = carsArray.findIndex(cars => cars.id === parseInt(this.state.currentCar))
+
+      owners[this.state.currentOwner]['cars'][carId]['services'].push(newInfo)
+
       this.setState({ owners })
-      
+      console.log(this.state.owners)
     })
 
   }
@@ -295,13 +310,23 @@ class App extends React.Component {
       owners[newOwner.id] = newOwner
 
       this.setState({ owners, currentOwner: newOwner.id, swap: false })
-      console.log(this.state.owners)
     })
   }
 
   //------- Toggle Forms ----------
   toggleAddCar = () => {
     const addCar = !this.state.addCar
+    console.log('cars', Object.values(this.state.owners[this.state.currentOwner].cars))
+    let owners = {...this.state.owners}
+    console.log('new service: ', owners[this.state.currentOwner]['cars'])
+
+
+    // carsArray.forEach(function(obj) {
+    //   for(let index in obj){
+    //     console.log(obj[index])
+    //   }
+    // })
+
     console.log(this.state.owners)
     this.setState({ addCar })
   }
@@ -337,11 +362,15 @@ class App extends React.Component {
   )
 
   getCurrentCar = () => (
-    this.state.owners[this.state.currentOwner].cars
+    this.state.owners[this.state.currentOwner].cars[(this.state.currentCar)]
   )
 
   getAllOwners = () => (
     Object.values(this.state.owners)
+  )
+
+  getAllOwnerCars = () => (
+    Object.values(this.state.owners[this.state.currentOwner].cars)
   )
 
   setCurrentOwner = (currentOwner) => {
@@ -367,7 +396,7 @@ class App extends React.Component {
             </FABButton>
             <aside>
               {this.state.addHistory ? <ServiceForm addServiceToCar={this.addServiceToCar} /> : null}
-              {this.state.addHistory ? ownerCarList(this.getCurrentCar(), this.state.currentCar, this.setCurrentCar) : null}
+              {this.state.addHistory ? ownerCarList(this.getAllOwnerCars(), this.state.currentCar, this.setCurrentCar) : null}
             </aside>
           </header>
           <section>
