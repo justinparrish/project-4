@@ -169,7 +169,7 @@ const objectFromListById = (owners, cars) => (
 
 const serviceObject = (cars, services) => (
   cars.reduce((owner, car) => {
-    car.services = services.filter(services => services.car === services.id)
+    car.services = services.filter(services => services.car === car.id)
 
     owner[car.id] = car
 
